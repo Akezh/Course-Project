@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&display=swap');
+
+.banner {
+  height: 300px;
+  box-shadow: 0px 8px 8px 4px rgba(255, 0, 0, 0.3);
+  border-radius: 24px;
+}
+
+.social-link {
+  img {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.company-para a:hover {
+  text-decoration: underline;
+  color: white;
+  text-underline-offset: 4px;
+}
+
+.status-tag-wrapper {
+  width: 170px;
+  height: 40px;
+  padding: 8px;
+
+  span {
+    font-size: 14px;
+  }
+}
+
+.starter-text-wrapper {
+  h1 {
+    font-size: 36px;
+  }
+
+  p {
+    font-size: 18px;
+  }
+}
+
+.header-name {
+  font-size: 20px;
+}
+
+.skill {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  background-color: #222125;
+  filter: drop-shadow(-4px -4px 5px rgba(255, 255, 255, 0.15));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media only screen and (max-width: 1300px) {
+
+  .avatar {
+    height: 420px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .social-link {
+    img {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  .avatar {
+    height: 300px;
+  }
+
+  .status-tag-wrapper {
+    width: 150px;
+    height: 32px;
+    padding: 4px;
+
+    span {
+      font-size: 12px;
+    }
+  }
+
+  .starter-text-wrapper {
+    h1 {
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  .header-name {
+    font-size: 16px;
+  }
+
+  .skill {
+    width: 76px;
+    height: 76px;
+    margin-left: auto;
+    margin-right: auto;
+
+    img {
+      height: 60%;
+    }
+  }
+}
