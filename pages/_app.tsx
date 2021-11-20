@@ -1,5 +1,6 @@
 // add bootstrap css
 import "bootstrap/dist/css/bootstrap.css";
+import "react-datepicker/dist/react-datepicker.css";
 import "styles/index.scss";
 import Head from "next/head";
 

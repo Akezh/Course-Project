@@ -1,13 +1,13 @@
 import {
   Header,
-  Starter,
+  MainPage,
   Footer,
 } from "../components";
 
 const IndexPage = () => (
   <div>
     <Header activeTab="Home" />
-    <Starter />
+    <MainPage />
     <Footer />
   </div>
 );
