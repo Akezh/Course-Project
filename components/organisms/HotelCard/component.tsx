@@ -4,7 +4,7 @@ import { Props } from './props';
 export const HotelCard: FC<Props> = ({ name, price, description, imageUrl, onClick, ...rest } : Props) => {
     return (
         <div {...rest}>
-            <div className="card" style={{ borderRadius: 16, border: 'none' }}>
+            <div style={{ borderRadius: 16, border: 'none' }}>
                 <img src={imageUrl} className="card-img-top tw-mb-2" alt="..." style={{ height: 144, borderRadius: 9 }} />
                 <div className="card-body d-flex justify-content-between">
                     <div className="card-img-overlay">
