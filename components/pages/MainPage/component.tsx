@@ -1,6 +1,6 @@
 import React, {FC, useState} from "react";
 import DatePicker from 'react-datepicker';
-import {HotelCard} from "./libs/HotelCard";
+import {HotelCard} from "../../organisms/HotelCard";
 
 export const MainPage: FC = () => {
     const [startDate, setStartDate] = useState(new Date())
