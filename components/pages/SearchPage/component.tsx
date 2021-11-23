@@ -1,6 +1,7 @@
 import React, {FC, useState, useEffect, useCallback, useMemo} from 'react'
 import CustomDropdown from '../../molecules/CustomDropdown/component'
 import axios from 'axios'
+import {HotelCard} from "../../organisms/HotelCard";
 
 interface hotelData {
     readonly name?: string; // SALAM ALEIKYM 
@@ -11,7 +12,7 @@ interface hotelData {
 }
 
 export const SearchPage: FC = () => {
-    const [hotelName, setHotelName] = useState('')
+    const [hotelName, setHotelName] = useState<string>("")
     const [country, setCountry] = useState('')
     const [features, setFeatures] = useState<Array<string>>([])
     const [cost, setCost] = useState(0)
@@ -19,6 +20,7 @@ export const SearchPage: FC = () => {
     const services = useMemo(() => ["SPA", "Swimming Pool", "Bowling", "Yacht"], [])
     const sortBy = useMemo(() => ["Alphabetically Ascending", "Alphabetically Descending", "Cost Ascending", "Cost Descending"], [])
     
+
     const [serverData, setServerData] = useState<hotelData[]>([]);
 
     const setSort = useCallback((sortbythis: string) => {
@@ -36,7 +38,6 @@ export const SearchPage: FC = () => {
         
     }, [features])
 
-    console.log(features)
     useEffect( () => {
         
 
@@ -57,14 +58,18 @@ export const SearchPage: FC = () => {
         
         setServerData(dataFromReq);
     }, [])
-    console.log(serverData)
+
+    let search = () => {
+        console.log("search clicked")
+    }
+
+
+
     return (
         <div className = "container">  
                 <div>
-                    {serverData[0] && serverData[0].name}
-                    {/* {dataFromReq.map((kek: hotelData, i: number) => (
-                        <div key = {i}>{kek} </div>
-                    ))} */}
+                    
+                    
                     <div className = "tw-font-bold tw-inline-block">
                         <div className = "tw-ml-4">
                             Hotel Name
@@ -108,7 +113,7 @@ export const SearchPage: FC = () => {
                         
                     </div>
                     <div className = "tw-font-bold tw-inline-block tw-ml-5 tw-w-48">
-                        <button className = "tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block tw-w-64 tw-text-center" style = {{backgroundColor: "#F7F7F7"}}>
+                        <button onClick = {search} className = "tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block tw-w-64 tw-text-center" style = {{backgroundColor: "#F7F7F7"}}>
                             Search
                         </button>
                         
@@ -117,12 +122,15 @@ export const SearchPage: FC = () => {
 
                 </div>
                 <div>
-                    {/* {dataFromReq} */}
+                <div  className = "row">
+
+                {serverData[0] && serverData.filter((item) => item.name?.startsWith(hotelName)).map((item, i) => (
+                    <HotelCard key = {i} className = "col-3"  name = {item.name} price = {item.price} description = {item.description} imageUrl = {item.imageUrl} onClick = {item.onClick} />
+                ))}
+                </div>
 
 
-
-
-                    <hr className = "tw-mt-5 tw-mb-5" />
+                    
                 </div>
         </div>
     )

@@ -5,8 +5,6 @@ import {
   Footer,
 } from "components";
 
-// import SearchPage from '../components/pages/SearchPage/component'
-
 const search = () => (
   <div>
     <Header activeTab="Home" />
