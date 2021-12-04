@@ -5,11 +5,8 @@ export const HotelCard: FC<Props> = ({ name, price, description, imageUrl, onCli
     return (
         <div {...rest}>
             <div style={{ borderRadius: 16, border: 'none' }}>
-                <img src={imageUrl} className="card-img-top tw-mb-2" alt="..." style={{ height: 144, borderRadius: 9 }} />
+                <img src={imageUrl} className="card-img-top tw-mb-2" alt="image" style={{ height: 144, borderRadius: 9 }} />
                 <div className="card-body d-flex justify-content-between">
-                    <div className="card-img-overlay">
-                        <p className="card-title tw-font-bold text-white" style={{ fontSize: 20 }}>{name}</p>
-                    </div>
                     <div>
                         <p className="card-text text-danger tw-font-semibold">{price}</p>
                         <p className="card-text text-dark tw-font-semibold tw-mt-2">{description}</p>
