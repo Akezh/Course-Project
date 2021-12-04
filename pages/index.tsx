@@ -1,16 +1,3 @@
-import React from "react";
-import {
-  Header,
-  MainPage,
-  Footer,
-} from "../components";
+import { MainPage } from "components";
 
-const IndexPage = () => (
-  <div>
-    <Header activeTab="Home" />
-    <MainPage />
-    <Footer />
-  </div>
-);
-
-export default IndexPage;
+export default MainPage;
