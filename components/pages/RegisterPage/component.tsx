@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import Link from "next/link";
 export const RegisterPage: FC = () => {
   return (
     <div className="container">
@@ -148,15 +149,19 @@ export const RegisterPage: FC = () => {
             I have read and agree to the Terms and Conditions
           </form>
           <div className="mt-5 text-center">
-            <a
-              style={{
-                fontSize: 15,
-                color: "#0645AD",
-                fontWeight: "bold",
-              }}
+
+            <Link
+                href="/login"
             >
-              Already have an account? Sign In
-            </a>
+              <a
+                  style={{
+                    fontSize: 15,
+                    color: "#0645AD",
+                    fontWeight: "bold",
+                  }}>
+                Already have an account? Sign In
+              </a>
+            </Link>
           </div>
         </div>
       </div>
