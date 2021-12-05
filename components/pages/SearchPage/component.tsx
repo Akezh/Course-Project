@@ -2,6 +2,7 @@ import React, { FC, useState, useEffect, useCallback, useMemo } from "react";
 import CustomDropdown from "../../molecules/CustomDropdown/component";
 import axios from "axios";
 import { HotelCard } from "../../organisms/HotelCard";
+import {Header, Footer} from "components";
 
 interface hotelData {
   readonly name?: string; // SALAM ALEIKYM
@@ -89,7 +90,6 @@ export const SearchPage: FC = () => {
             style={{ backgroundColor: "#F7F7F7" }}
           ></input>
         </div>
-
         <div className="tw-font-bold tw-inline-block tw-ml-5">
           <div className="tw-ml-4">Country</div>
           <input

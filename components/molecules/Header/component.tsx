@@ -65,9 +65,10 @@ export const Header: FC<Props> = ({ activeTab }: Props) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <button className="btn btn-outline-dark" type="submit">Login</button>
+                  <Link href="/login">
+                    <button className="btn btn-outline-dark" type="submit">Login</button>
+                  </Link>
                 </li>
-
               </ul>
             </div>
           </div>
