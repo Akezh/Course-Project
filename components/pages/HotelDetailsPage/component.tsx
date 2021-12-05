@@ -9,12 +9,12 @@ type service = {
 }
 
 const images = [
-    { url: "images/starter-hotel.jpg" },
-    { url: "images/starter-hotel.jpg" },
-    { url: "images/starter-hotel.jpg" },
-    { url: "images/starter-hotel.jpg" },
-    { url: "images/starter-hotel.jpg" },
-    { url: "images/starter-hotel.jpg" },
+    { url: "/images/starter-hotel.png" },
+    { url: "/images/starter-hotel.png" },
+    { url: "/images/starter-hotel.png" },
+    { url: "/images/starter-hotel.png" },
+    { url: "/images/starter-hotel.png" },
+    { url: "/images/starter-hotel.png" },
 ];
 
 export const HotelDetailsPage: FC = () => {
