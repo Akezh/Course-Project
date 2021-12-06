@@ -39,6 +39,8 @@ const ClerkListItem = ({
             </div>
             <div className="tw-ml-4">Room: {Room}</div>
             <div className="tw-ml-4">Cost: {Cost}</div>
+            <div className="tw-ml-4">People: {PeopleCount}</div>
+
             <div className="tw-ml-4">
               Booking Start Date: {BookingStartDate}
             </div>
