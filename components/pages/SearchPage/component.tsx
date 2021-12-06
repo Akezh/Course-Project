@@ -1,8 +1,7 @@
 import React, { FC, useState, useEffect, useCallback, useMemo } from "react";
 import CustomDropdown from "../../molecules/CustomDropdown/component";
-import axios from "axios";
 import { HotelCard } from "../../organisms/HotelCard";
-import {Header, Footer} from "components";
+import { Header, Footer } from "components";
 
 interface hotelData {
   readonly name?: string; // SALAM ALEIKYM
@@ -78,88 +77,100 @@ export const SearchPage: FC = () => {
   };
 
   return (
-    <div className="container">
-      <div>
-        <div className="tw-font-bold tw-inline-block">
-          <div className="tw-ml-4">Hotel Name</div>
-          <input
-            type="text"
-            placeholder="  hotel name"
-            onChange={(e) => setHotelName(e.target.value)}
-            className="tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block"
-            style={{ backgroundColor: "#F7F7F7" }}
-          ></input>
+    <>
+      <Header activeTab="Search"></Header>
+      <div className="container tw-mt-10">
+        <div>
+          <div className="tw-font-bold tw-inline-block">
+            <div className="tw-ml-4">Hotel Name</div>
+            <input
+              type="text"
+              placeholder="  hotel name"
+              onChange={(e) => setHotelName(e.target.value)}
+              className="tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block"
+              style={{ backgroundColor: "#F7F7F7" }}
+            ></input>
+          </div>
+          <div className="tw-font-bold tw-inline-block tw-ml-5">
+            <div className="tw-ml-4">Country</div>
+            <input
+              type="text"
+              placeholder="  country"
+              onChange={(e) => setCountry(e.target.value)}
+              className="tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block tw-w-64"
+              style={{ backgroundColor: "#F7F7F7" }}
+            ></input>
+          </div>
+          <div className="tw-font-bold tw-inline-block tw-ml-5">
+            <div className="tw-ml-4">Features</div>
+            <CustomDropdown
+              onDropClick={push}
+              items={services}
+              name="Features"
+            />
+          </div>
+          <div className="tw-inline-block ">
+            {features.map((item, i) => (
+              <div
+                key={i}
+                className="tw-font-bold tw-inline-block tw-ml-4 btn btn-outline-secondary"
+              >
+                {item}
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="tw-font-bold tw-inline-block tw-ml-5">
-          <div className="tw-ml-4">Country</div>
-          <input
-            type="text"
-            placeholder="  country"
-            onChange={(e) => setCountry(e.target.value)}
-            className="tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block tw-w-64"
-            style={{ backgroundColor: "#F7F7F7" }}
-          ></input>
-        </div>
-        <div className="tw-font-bold tw-inline-block tw-ml-5">
-          <div className="tw-ml-4">Features</div>
-          <CustomDropdown onDropClick={push} items={services} name="Features" />
-        </div>
-        <div className="tw-inline-block ">
-          {features.map((item, i) => (
-            <div
-              key={i}
-              className="tw-font-bold tw-inline-block tw-ml-4 btn btn-outline-secondary"
+        <div>
+          <div className="tw-font-bold tw-inline-block tw-ml">
+            <div className="tw-ml-4">Cost range</div>
+            <input
+              type="number"
+              placeholder="  cost"
+              onChange={(e) => setCost(Number(e.target.value))}
+              className="tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block"
+              style={{ backgroundColor: "#F7F7F7" }}
+            ></input>
+          </div>
+          <div className="tw-font-bold tw-inline-block tw-ml-5">
+            <div className="tw-ml-4">Sort by</div>
+            <CustomDropdown onDropClick={setSort} items={sortBy} name={srt} />
+          </div>
+          <div className="tw-font-bold tw-inline-block tw-ml-5 tw-w-48">
+            <button
+              onClick={search}
+              className="tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block tw-w-64 tw-text-center"
+              style={{ backgroundColor: "#F7F7F7" }}
             >
-              {item}
-            </div>
-          ))}
+              Search
+            </button>
+          </div>
+          <div
+            className="w-100 tw-my-5"
+            style={{ height: 1, backgroundColor: "black" }}
+          ></div>
+          {/* <hr className="tw-mt-5 tw-mb-5" style={{ zIndex: 0 }} /> */}
+        </div>
+        <div>
+          <div className="row">
+            {serverData[0] &&
+              serverData
+                .filter((item) => item.name?.startsWith(hotelName))
+                .map((item, i) => (
+                  <HotelCard
+                    key={i}
+                    className="col-3"
+                    name={item.name}
+                    price={item.price}
+                    description={item.description}
+                    imageUrl={item.imageUrl}
+                    onClick={item.onClick}
+                  />
+                ))}
+          </div>
         </div>
       </div>
-      <div>
-        <div className="tw-font-bold tw-inline-block tw-ml">
-          <div className="tw-ml-4">Cost range</div>
-          <input
-            type="number"
-            placeholder="  cost"
-            onChange={(e) => setCost(Number(e.target.value))}
-            className="tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block"
-            style={{ backgroundColor: "#F7F7F7" }}
-          ></input>
-        </div>
-        <div className="tw-font-bold tw-inline-block tw-ml-5">
-          <div className="tw-ml-4">Sort by</div>
-          <CustomDropdown onDropClick={setSort} items={sortBy} name={srt} />
-        </div>
-        <div className="tw-font-bold tw-inline-block tw-ml-5 tw-w-48">
-          <button
-            onClick={search}
-            className="tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block tw-w-64 tw-text-center"
-            style={{ backgroundColor: "#F7F7F7" }}
-          >
-            Search
-          </button>
-        </div>
-        <hr className="tw-mt-5 tw-mb-5" />
-      </div>
-      <div>
-        <div className="row">
-          {serverData[0] &&
-            serverData
-              .filter((item) => item.name?.startsWith(hotelName))
-              .map((item, i) => (
-                <HotelCard
-                  key={i}
-                  className="col-3"
-                  name={item.name}
-                  price={item.price}
-                  description={item.description}
-                  imageUrl={item.imageUrl}
-                  onClick={item.onClick}
-                />
-              ))}
-        </div>
-      </div>
-    </div>
+      <Footer></Footer>
+    </>
   );
 };
 export default SearchPage;

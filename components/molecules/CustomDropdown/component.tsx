@@ -23,14 +23,14 @@ const CustomDropdown = ({ items, onDropClick, name }: Props) => {
             style={{ backgroundColor: "#F7F7F7" }}
           >
             {items.map((item, i) => (
-              <div
+              <button
                 key={i}
                 style={{ backgroundColor: "#F7F7F7" }}
-                className="tw-rounded-xl tw-border-solid pt-1"
+                className="tw-rounded-xl tw-border-solid pt-1 tw-block tw-text-center tw-w-60 tw-z-50 tw-opacity-100"
                 onClick={() => onDropClick(item ?? "")}
               >
-                {item} <hr />
-              </div>
+                {item}
+              </button>
             ))}
           </div>
         )}
