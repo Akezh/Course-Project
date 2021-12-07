@@ -29,7 +29,7 @@ export const LoginPage: FC = () => {
     let responseJSON = {
       logged: true,
       userName: "SWE_Dream_Team",
-      role: "clerk",
+      role: "user",
       id: 228,
     };
     console.log(responseJSON);
@@ -44,6 +44,10 @@ export const LoginPage: FC = () => {
     } else {
       window.alert("Invalid credentials");
     }
+  };
+  let signout = async () => {
+    await setUser({ logged: false, userName: "null", role: "none" });
+    alert("Successfully signed out");
   };
   return (
     <>
@@ -65,69 +69,94 @@ export const LoginPage: FC = () => {
           </div>
 
           <div className="col-6 tw-p-10">
-            <p
-              className="text-center mt-1"
-              style={{ fontSize: 35, fontWeight: "bold" }}
-            >
-              Sign In
-            </p>
-            <div className="mt-2 tw-px-10">
+            {user.logged ? (
               <div>
-                <label htmlFor="usr">
-                  <p style={{ fontSize: 18, fontWeight: "bold" }}>Username </p>
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="email"
-                  id="usr"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-              <div className="mt-3">
-                <div className="d-flex justify-content-between align-items-center">
-                  <p style={{ fontSize: 18, fontWeight: "bold" }}>Password</p>
-                  <a
-                    style={{
-                      fontSize: 15,
-                      color: "#0645AD",
-                      textDecoration: "underline",
-                    }}
-                  >
-                    Forgot password?
-                  </a>
-                </div>
-                <input
-                  type="password"
-                  id="psw"
-                  className="form-control"
-                  placeholder="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className="mt-5 text-center">
-                <button
-                  className="btn btn-lg btn-outline-success w-100"
-                  onClick={submit}
+                {" "}
+                <p
+                  className="text-center mt-1 tw-mb-10"
+                  style={{ fontSize: 35, fontWeight: "bold" }}
                 >
-                  Sign In
+                  Sign Out
+                </p>{" "}
+                <button
+                  className="btn btn-lg btn-outline-secondary w-100"
+                  onClick={signout}
+                >
+                  Sign Out
                 </button>
               </div>
-            </div>
-            <div className="mt-5 text-center">
-              <Link href="/register">
-                <a
-                  style={{
-                    fontSize: 15,
-                    color: "#0645AD",
-                    fontWeight: "bold",
-                  }}
+            ) : (
+              <>
+                {" "}
+                <p
+                  className="text-center mt-1"
+                  style={{ fontSize: 35, fontWeight: "bold" }}
                 >
-                  Dont have an account?
-                </a>
-              </Link>
-            </div>
+                  Sign In
+                </p>
+                <div className="mt-2 tw-px-10">
+                  <div>
+                    <label htmlFor="usr">
+                      <p style={{ fontSize: 18, fontWeight: "bold" }}>
+                        Username{" "}
+                      </p>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="email"
+                      id="usr"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="mt-3">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <p style={{ fontSize: 18, fontWeight: "bold" }}>
+                        Password
+                      </p>
+                      <a
+                        style={{
+                          fontSize: 15,
+                          color: "#0645AD",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        Forgot password?
+                      </a>
+                    </div>
+                    <input
+                      type="password"
+                      id="psw"
+                      className="form-control"
+                      placeholder="password"
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                  <div className="mt-5 text-center">
+                    <button
+                      className="btn btn-lg btn-outline-success w-100"
+                      onClick={submit}
+                    >
+                      Sign In
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-5 text-center">
+                  <Link href="/register">
+                    <a
+                      style={{
+                        fontSize: 15,
+                        color: "#0645AD",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Dont have an account?
+                    </a>
+                  </Link>
+                </div>{" "}
+              </>
+            )}
           </div>
         </div>
       </div>

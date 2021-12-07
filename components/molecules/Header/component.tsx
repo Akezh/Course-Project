@@ -22,9 +22,7 @@ export const Header: FC<Props> = ({ activeTab }: Props) => {
   const [user, setUser] = useContext(UserContext);
   let signout = async () => {
     await setUser({ logged: false, userName: "null", role: "none" });
-    setTimeout(() => {
-      alert(user.logged);
-    }, 1000);
+    alert("Successfully signed out");
   };
   return (
     <div className="container tw-py-4">
@@ -134,12 +132,14 @@ export const Header: FC<Props> = ({ activeTab }: Props) => {
               </li>
               {user.logged ? (
                 <li className="nav-item">
-                  <p
-                    className="nav-link tw-inline"
-                    style={{ cursor: "pointer" }}
-                  >
-                    Welcome, {user.userName}
-                  </p>
+                  <Link href="/profile">
+                    <p
+                      className="nav-link tw-inline"
+                      style={{ cursor: "pointer" }}
+                    >
+                      Welcome, {user.userName}
+                    </p>
+                  </Link>
                   <button
                     className="btn btn-outline-dark tw-inline tw-ml-4"
                     type="submit"
