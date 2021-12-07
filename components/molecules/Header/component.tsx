@@ -20,9 +20,11 @@ export const Header: FC<Props> = ({ activeTab }: Props) => {
   //   }
   // }, []);
   const [user, setUser] = useContext(UserContext);
-  let signout = () => {
-    setUser({ logged: false, userName: "null", role: "none" });
-    alert("Signed out successfully");
+  let signout = async () => {
+    await setUser({ logged: false, userName: "null", role: "none" });
+    setTimeout(() => {
+      alert(user.logged);
+    }, 1000);
   };
   return (
     <div className="container tw-py-4">

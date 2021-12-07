@@ -35,6 +35,7 @@ export const RegisterPage: FC = () => {
                   placeholder="email"
                   id="usr"
                   name="Email"
+                  aria-required
                 />
               </div>
               <div className="mt-3">
@@ -46,31 +47,21 @@ export const RegisterPage: FC = () => {
                   id="psw"
                   className="form-control"
                   placeholder="password"
+                  required
                   name="Password"
                 />
               </div>
               <div className="mt-3">
                 <label htmlFor="name">
-                  <p style={{ fontSize: 18, fontWeight: "bold" }}>Name</p>
+                  <p style={{ fontSize: 18, fontWeight: "bold" }}>Full Name</p>
                 </label>
                 <input
                   type="text"
                   id="name"
                   className="form-control"
-                  placeholder="name"
-                  name="Name"
-                />
-              </div>
-              <div className="mt-3">
-                <label htmlFor="surname">
-                  <p style={{ fontSize: 18, fontWeight: "bold" }}>Surname</p>
-                </label>
-                <input
-                  type="text"
-                  id="psw"
-                  className="form-control"
-                  placeholder="surname"
-                  name="Surname"
+                  placeholder="Full name"
+                  name="FullName"
+                  required
                 />
               </div>
               <div className="mt-3">
@@ -84,7 +75,7 @@ export const RegisterPage: FC = () => {
                   id="mobphone"
                   name="Mobphone"
                   placeholder="123-45-678"
-                  pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                  // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                   required
                   className="form-control"
                   // name = "phone"
@@ -99,7 +90,7 @@ export const RegisterPage: FC = () => {
                   id="homephone"
                   name="Homephone"
                   placeholder="123-45-678"
-                  pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                  // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                   required
                   className="form-control"
                 />
@@ -116,20 +107,26 @@ export const RegisterPage: FC = () => {
                   className="form-control"
                   placeholder="Home Address"
                   name="Address"
+                  required
                 />
               </div>
               <div className="mt-3">
                 <p style={{ fontSize: 18, fontWeight: "bold" }}>
                   Identification Type
                 </p>
-                <select>
+                <input type="radio" name="docType" value="passport"></input>
+                <label className="tw-my-1"> Passport</label>
+                <br />
+                <input type="radio" name="docType" value="NationalID"></input>
+                <label className="tw-my-1">National ID</label>
+                {/* <select>
                   <option key="passportnum" value="passportnum">
                     Passport
                   </option>
                   <option key="natid" value="natid">
                     National ID
                   </option>
-                </select>
+                </select> */}
               </div>
               <div className="mt-3">
                 <label htmlFor="idnum">

@@ -7,13 +7,13 @@ export const AdminPage: FC = () => {
   const [user, setUser] = useContext(UserContext);
 
   useEffect(() => {
-    const auth = {
-      logged: true,
-      userName: "john",
-      role: "admin",
-      id: 1,
-    };
-    setUser(auth);
+    // const auth = {
+    //   logged: true,
+    //   userName: "john",
+    //   role: "admin",
+    //   id: 1,
+    // };
+    // setUser(auth);
   });
 
   const schedule = useMemo(
