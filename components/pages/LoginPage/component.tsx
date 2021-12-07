@@ -1,7 +1,7 @@
-import React, { FC, useState, useContext } from "react";
+import React, { FC, useContext, useState } from "react";
 import Link from "next/link";
-import { Footer, Header } from "components";
-import { UserContext } from "components";
+import { Footer, Header, UserContext } from "components";
+
 export const LoginPage: FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +48,7 @@ export const LoginPage: FC = () => {
   return (
     <>
       <Header activeTab="Login" />
-      <div className="container">
+      <div className="container my-5">
         <p
           className="text-center mt-5"
           style={{ fontSize: 36, fontWeight: "bolder" }}
@@ -57,7 +57,11 @@ export const LoginPage: FC = () => {
         </p>
         <div className="row">
           <div className="col-6 tw-p-10">
-            <img src="images/starter-hotel.png" alt="starter-hotel" />
+            <img
+              src="images/starter-hotel.png"
+              alt="starter-hotel"
+              style={{ height: 250, marginTop: "auto", marginBottom: "auto" }}
+            />
           </div>
 
           <div className="col-6 tw-p-10">

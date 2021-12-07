@@ -2,6 +2,7 @@ import React, { FC, useContext } from "react";
 import Link from "next/link";
 import { Props } from "./props";
 import { UserContext } from "components";
+
 export const Header: FC<Props> = ({ activeTab }: Props) => {
   // interface localStore {
   //   logged?: boolean;
@@ -77,38 +78,42 @@ export const Header: FC<Props> = ({ activeTab }: Props) => {
                   )}
                 </Link>
               </li>
-              <li className="nav-item tw-mr-6">
-                <Link href="/admin">
-                  {activeTab === "Admin" ? (
-                    <p
-                      className="nav-link active"
-                      style={{ cursor: "pointer" }}
-                    >
-                      Admin console
-                    </p>
-                  ) : (
-                    <p className="nav-link" style={{ cursor: "pointer" }}>
-                      Admin console
-                    </p>
-                  )}
-                </Link>
-              </li>
-              <li className="nav-item tw-mr-6">
-                <Link href="/clerk">
-                  {activeTab === "Clerk" ? (
-                    <p
-                      className="nav-link active"
-                      style={{ cursor: "pointer" }}
-                    >
-                      Clerk Console
-                    </p>
-                  ) : (
-                    <p className="nav-link" style={{ cursor: "pointer" }}>
-                      Clerk Console
-                    </p>
-                  )}
-                </Link>
-              </li>
+              {user.logged && user.role === "admin" && (
+                <li className="nav-item tw-mr-6">
+                  <Link href="/admin">
+                    {activeTab === "Admin" ? (
+                      <p
+                        className="nav-link active"
+                        style={{ cursor: "pointer" }}
+                      >
+                        Admin console
+                      </p>
+                    ) : (
+                      <p className="nav-link" style={{ cursor: "pointer" }}>
+                        Admin console
+                      </p>
+                    )}
+                  </Link>
+                </li>
+              )}
+              {user.logged && user.role === "clerk" && (
+                <li className="nav-item tw-mr-6">
+                  <Link href="/clerk">
+                    {activeTab === "Clerk" ? (
+                      <p
+                        className="nav-link active"
+                        style={{ cursor: "pointer" }}
+                      >
+                        Clerk Console
+                      </p>
+                    ) : (
+                      <p className="nav-link" style={{ cursor: "pointer" }}>
+                        Clerk Console
+                      </p>
+                    )}
+                  </Link>
+                </li>
+              )}
               <li className="nav-item tw-mr-6">
                 <Link href="/about">
                   {activeTab === "About" ? (
@@ -125,31 +130,31 @@ export const Header: FC<Props> = ({ activeTab }: Props) => {
                   )}
                 </Link>
               </li>
-              <li className="nav-item">
-                {user.logged ? (
-                  <>
-                    <p
-                      className="nav-link tw-inline"
-                      style={{ cursor: "pointer" }}
-                    >
-                      Welcome, {user.userName}
-                    </p>
-                    <button
-                      className="btn btn-outline-dark tw-inline tw-ml-4"
-                      type="submit"
-                      onClick={signout}
-                    >
-                      Sign Out
-                    </button>
-                  </>
-                ) : (
+              {user.logged ? (
+                <li className="nav-item">
+                  <p
+                    className="nav-link tw-inline"
+                    style={{ cursor: "pointer" }}
+                  >
+                    Welcome, {user.userName}
+                  </p>
+                  <button
+                    className="btn btn-outline-dark tw-inline tw-ml-4"
+                    type="submit"
+                    onClick={signout}
+                  >
+                    Sign Out
+                  </button>
+                </li>
+              ) : (
+                <li className="nav-item">
                   <Link href="/login">
                     <button className="btn btn-outline-dark" type="submit">
                       Login
                     </button>
                   </Link>
-                )}
-              </li>
+                </li>
+              )}
             </ul>
           </div>
         </div>

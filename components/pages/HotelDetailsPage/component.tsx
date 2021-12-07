@@ -48,8 +48,9 @@ export const HotelDetailsPage: FC = () => {
                         </p>
 
                         <SimpleImageSlider
-                            width={896}
-                            height={504}
+                            style={{ marginTop: 36 }}
+                            width={700}
+                            height={400}
                             images={images}
                             showBullets={true}
                             showNavs={true}
