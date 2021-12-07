@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "styles/index.scss";
 import Head from "next/head";
-import React, { createContext, useState } from "react";
+import React, { useState } from "react";
 import { UserContext } from "components";
 // @ts-ignore
 import { AppProps } from "next/app";

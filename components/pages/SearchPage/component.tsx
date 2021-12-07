@@ -1,7 +1,8 @@
-import React, { FC, useState, useEffect, useCallback, useMemo } from "react";
-import CustomDropdown from "../../molecules/CustomDropdown/component";
+import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { HotelCard } from "../../organisms/HotelCard";
-import { Header, Footer } from "components";
+import { Footer, Header } from "components";
+
+import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 
 interface hotelData {
   readonly name?: string; // SALAM ALEIKYM
@@ -57,14 +58,14 @@ export const SearchPage: FC = () => {
         name: "ASD",
         description: "ASDD",
         price: "228$",
-        imageUrl: "https://",
+        imageUrl: "images/starter-hotel.png",
         onClick: () => {},
       },
       {
         name: "qwe",
         description: "qwee",
         price: "2282$",
-        imageUrl: "https://asd",
+        imageUrl: "images/starter-hotel.png",
         onClick: () => {},
       },
     ];
@@ -81,35 +82,35 @@ export const SearchPage: FC = () => {
       <Header activeTab="Search"></Header>
       <div className="container tw-mt-10">
         <div>
-          <div className="tw-font-bold tw-inline-block">
-            <div className="tw-ml-4">Hotel Name</div>
+          <div className="tw-font-bold tw-inline-block mb-4">
+            <div>Hotel Name</div>
             <input
               type="text"
               placeholder="  hotel name"
               onChange={(e) => setHotelName(e.target.value)}
-              className="tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block"
-              style={{ backgroundColor: "#F7F7F7" }}
+              className="form-control mt-2"
             ></input>
           </div>
-          <div className="tw-font-bold tw-inline-block tw-ml-5">
-            <div className="tw-ml-4">Country</div>
+          <div className="tw-font-bold tw-inline-block tw-ml-10">
+            <div>Country</div>
             <input
               type="text"
               placeholder="  country"
               onChange={(e) => setCountry(e.target.value)}
-              className="tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block tw-w-64"
-              style={{ backgroundColor: "#F7F7F7" }}
+              className="form-control mt-2"
             ></input>
           </div>
-          <div className="tw-font-bold tw-inline-block tw-ml-5">
-            <div className="tw-ml-4">Features</div>
-            <CustomDropdown
-              onDropClick={push}
-              items={services}
-              name="Features"
-            />
+          <div className="tw-font-bold tw-inline-block tw-ml-10">
+            <div className="mb-2">Features</div>
+            <DropdownButton as={ButtonGroup} variant="primary" title="Features">
+              {services.map((n, i) => (
+                <div key={i}>
+                  <Dropdown.Item eventKey={i}>{n}</Dropdown.Item>
+                </div>
+              ))}
+            </DropdownButton>
           </div>
-          <div className="tw-inline-block ">
+          <div className="tw-inline-block">
             {features.map((item, i) => (
               <div
                 key={i}
@@ -122,35 +123,38 @@ export const SearchPage: FC = () => {
         </div>
         <div>
           <div className="tw-font-bold tw-inline-block tw-ml">
-            <div className="tw-ml-4">Cost range</div>
+            <div>Cost range</div>
             <input
               type="number"
               placeholder="  cost"
               onChange={(e) => setCost(Number(e.target.value))}
-              className="tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block"
-              style={{ backgroundColor: "#F7F7F7" }}
+              className="form-control"
             ></input>
           </div>
-          <div className="tw-font-bold tw-inline-block tw-ml-5">
-            <div className="tw-ml-4">Sort by</div>
-            <CustomDropdown onDropClick={setSort} items={sortBy} name={srt} />
+          <div className="tw-font-bold tw-inline-block tw-ml-10">
+            <div>Filter</div>
+            <DropdownButton as={ButtonGroup} variant="primary" title="Features">
+              {sortBy.map((n, i) => (
+                <div key={i}>
+                  <Dropdown.Item eventKey={i}>{n}</Dropdown.Item>
+                </div>
+              ))}
+            </DropdownButton>
           </div>
-          <div className="tw-font-bold tw-inline-block tw-ml-5 tw-w-48">
+          <div className="tw-font-bold mt-4">
             <button
               onClick={search}
-              className="tw-border-solid tw-border-2 tw-rounded-2xl tw-inline-block tw-w-64 tw-text-center"
-              style={{ backgroundColor: "#F7F7F7" }}
+              className="btn btn-lg btn-outline-dark w-25"
             >
               Search
             </button>
           </div>
-          <div
-            className="w-100 tw-my-5"
-            style={{ height: 1, backgroundColor: "black" }}
-          ></div>
-          {/* <hr className="tw-mt-5 tw-mb-5" style={{ zIndex: 0 }} /> */}
+          {/*<div*/}
+          {/*  className="w-100 tw-my-5"*/}
+          {/*  style={{ height: 1, backgroundColor: "black" }}*/}
+          {/*></div>*/}
         </div>
-        <div>
+        <div className="mt-5">
           <div className="row">
             {serverData[0] &&
               serverData
