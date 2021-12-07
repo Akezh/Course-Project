@@ -7,8 +7,9 @@ import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 interface hotelData {
   readonly name?: string; // SALAM ALEIKYM
   readonly description?: string;
-  readonly price?: string;
+  readonly price?: number;
   readonly imageUrl?: string;
+  readonly country?: string;
   readonly onClick?: () => void;
 }
 
@@ -57,14 +58,16 @@ export const SearchPage: FC = () => {
       {
         name: "ASD",
         description: "ASDD",
-        price: "228$",
+        price: 228,
         imageUrl: "images/starter-hotel.png",
+        country: "Afghanistan",
         onClick: () => {},
       },
       {
         name: "qwe",
         description: "qwee",
-        price: "2282$",
+        price: 2282,
+        country: "Kazakhstan",
         imageUrl: "images/starter-hotel.png",
         onClick: () => {},
       },
@@ -141,14 +144,14 @@ export const SearchPage: FC = () => {
               ))}
             </DropdownButton>
           </div>
-          <div className="tw-font-bold mt-4">
+          {/* <div className="tw-font-bold mt-4">
             <button
               onClick={search}
               className="btn btn-lg btn-outline-dark w-25"
             >
               Search
             </button>
-          </div>
+          </div> */}
           {/*<div*/}
           {/*  className="w-100 tw-my-5"*/}
           {/*  style={{ height: 1, backgroundColor: "black" }}*/}
@@ -158,7 +161,18 @@ export const SearchPage: FC = () => {
           <div className="row">
             {serverData[0] &&
               serverData
-                .filter((item) => item.name?.startsWith(hotelName))
+                .filter((item) =>
+                  item.name?.toLowerCase().startsWith(hotelName)
+                )
+                .filter((item) =>
+                  item.country?.toLowerCase().startsWith(country)
+                )
+                .filter((item) => {
+                  if (cost !== 0) {
+                    return (item?.price ?? 0) < cost;
+                  }
+                  return true;
+                })
                 .map((item, i) => (
                   <HotelCard
                     key={i}
