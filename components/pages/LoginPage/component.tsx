@@ -1,6 +1,6 @@
 import React, { FC, useContext, useState } from "react";
 import Link from "next/link";
-import { Footer, Header, UserContext } from "components";
+import { Footer, Header, HotelsCarousel, UserContext } from "components";
 
 export const LoginPage: FC = () => {
   const [email, setEmail] = useState("");
@@ -61,11 +61,7 @@ export const LoginPage: FC = () => {
         </p>
         <div className="row">
           <div className="col-6 tw-p-10">
-            <img
-              src="images/starter-hotel.png"
-              alt="starter-hotel"
-              style={{ height: 250, marginTop: "auto", marginBottom: "auto" }}
-            />
+            <HotelsCarousel imageHeight={300} />
           </div>
 
           <div className="col-6 tw-p-10">

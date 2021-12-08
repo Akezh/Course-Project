@@ -30,7 +30,7 @@ export const Header: FC<Props> = ({ activeTab }: Props) => {
         <div className="container-fluid">
           <Link href="/">
             <p className="navbar-brand" style={{ cursor: "pointer" }}>
-              Hotel Management
+              Rexar hotels & SPA
             </p>
           </Link>
           <button

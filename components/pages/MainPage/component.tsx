@@ -19,7 +19,14 @@ export const MainPage: FC = () => {
   return (
     <React.Fragment>
       <Header activeTab="Home" />
-      <div className="container my-5">
+      <div className="container my-4">
+        <p
+          className="tw-font-bold tw-text-3xl text-center mb-5"
+          style={{ cursor: "pointer" }}
+        >
+          Rexar hotels & SPA
+        </p>
+
         <div className="position-relative mt-4 tw-pb-16">
           <img alt="starter-hotel w-100" src="/images/starter-hotel.png" />
           <SearchBar onSubmit={onSearchClick} />
