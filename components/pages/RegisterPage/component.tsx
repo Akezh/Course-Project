@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import Link from "next/link";
 import { Footer, Header } from "components";
+
 export const RegisterPage: FC = () => {
   return (
     <>
@@ -13,8 +14,15 @@ export const RegisterPage: FC = () => {
           Registration
         </p>
         <div className="row">
-          <div className="col-6 tw-p-10">
-            <img src="images/starter-hotel.png" alt="starter-hotel" />
+          <div className="col-6 tw-p-10 d-flex justify-content-center align-items-center">
+            <img
+              src="images/dubai.png"
+              style={{
+                borderRadius: 6,
+                filter: "drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.35))",
+              }}
+              alt="starter-hotel"
+            />
           </div>
 
           <div className="col-6 tw-p-10">
@@ -115,18 +123,10 @@ export const RegisterPage: FC = () => {
                   Identification Type
                 </p>
                 <input type="radio" name="docType" value="passport"></input>
-                <label className="tw-my-1"> Passport</label>
+                <label className="tw-my-1 tw-ml-3"> Passport</label>
                 <br />
                 <input type="radio" name="docType" value="NationalID"></input>
-                <label className="tw-my-1">National ID</label>
-                {/* <select>
-                  <option key="passportnum" value="passportnum">
-                    Passport
-                  </option>
-                  <option key="natid" value="natid">
-                    National ID
-                  </option>
-                </select> */}
+                <label className="tw-my-1 tw-ml-3">National ID</label>
               </div>
               <div className="mt-3">
                 <label htmlFor="idnum">
@@ -157,7 +157,7 @@ export const RegisterPage: FC = () => {
                 name="checkbox"
                 value="check"
                 id="agree"
-                className="mt-3"
+                className="mt-3 tw-mr-3"
                 required
               />
               I have read and agree to the Terms and Conditions

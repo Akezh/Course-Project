@@ -6,3 +6,4 @@ export * from "./RegisterPage";
 export * from "./AdminPage";
 export * from "./ClerkPage";
 export * from "./ProfilePage";
+export * from "./AboutPage";
