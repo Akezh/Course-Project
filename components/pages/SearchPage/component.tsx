@@ -3,7 +3,6 @@ import { HotelCard } from "../../organisms/HotelCard";
 import { Footer, Header } from "components";
 import mock from "./mock";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
-import { useRouter } from "next/router";
 
 interface hotelData {
   readonly name?: string; // SALAM ALEIKYM
