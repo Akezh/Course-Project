@@ -1,8 +1,9 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { HotelCard } from "../../organisms/HotelCard";
 import { Footer, Header } from "components";
-
+import mock from "./mock";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
+import { useRouter } from "next/router";
 
 interface hotelData {
   readonly name?: string; // SALAM ALEIKYM
@@ -76,10 +77,6 @@ export const SearchPage: FC = () => {
     setServerData(dataFromReq);
   }, []);
 
-  let search = () => {
-    console.log("search clicked");
-  };
-
   return (
     <>
       <Header activeTab="Search"></Header>
@@ -108,25 +105,46 @@ export const SearchPage: FC = () => {
             <DropdownButton as={ButtonGroup} variant="primary" title="Features">
               {services.map((n, i) => (
                 <div key={i}>
-                  <Dropdown.Item eventKey={i}>{n}</Dropdown.Item>
+                  <Dropdown.Item
+                    eventKey={i}
+                    onClick={(e) => {
+                      const node = e.target as HTMLElement;
+                      push(node.innerText);
+                    }}
+                  >
+                    {n}
+                  </Dropdown.Item>
                 </div>
               ))}
             </DropdownButton>
           </div>
           <div className="tw-inline-block">
             {features.map((item, i) => (
-              <div
+              <button
                 key={i}
                 className="tw-font-bold tw-inline-block tw-ml-4 btn btn-outline-secondary"
+                onClick={() => {
+                  // console.log("CL1k");
+
+                  let arr: string[] = [];
+                  for (let str of features) {
+                    if (str === item) {
+                      continue;
+                    }
+                    arr.push(str);
+                  }
+                  console.log(arr);
+                  setFeatures(arr);
+                }}
               >
                 {item}
-              </div>
+              </button>
             ))}
           </div>
         </div>
         <div>
           <div className="tw-font-bold tw-inline-block tw-ml">
-            <div>Cost range</div>
+            <div>Max cost per day</div>
             <input
               type="number"
               placeholder="  cost"
@@ -136,10 +154,29 @@ export const SearchPage: FC = () => {
           </div>
           <div className="tw-font-bold tw-inline-block tw-ml-10">
             <div>Filter</div>
-            <DropdownButton as={ButtonGroup} variant="primary" title="Features">
+            <DropdownButton as={ButtonGroup} variant="primary" title={srt}>
               {sortBy.map((n, i) => (
                 <div key={i}>
-                  <Dropdown.Item eventKey={i}>{n}</Dropdown.Item>
+                  <Dropdown.Item
+                    eventKey={i}
+                    onClick={(e) => {
+                      const node = e.target as HTMLElement;
+                      setSort(node.innerText);
+                      // let arr = features.slice(0);
+                      // if (srt === "Alphabetically Descending") {
+                      //   arr.sort().reverse()
+                      //   setFeatures(arr)
+                      // } else if (srt === "Alphabetically Ascending") {
+                      //   arr.sort()
+                      //   setFeatures(arr)
+                      // } else if (srt === "Cost Descending") {
+                      //   arr.sort()
+                      // } else if (srt === "Cost Ascending") {
+                      // }
+                    }}
+                  >
+                    {n}
+                  </Dropdown.Item>
                 </div>
               ))}
             </DropdownButton>
@@ -159,19 +196,57 @@ export const SearchPage: FC = () => {
         </div>
         <div className="mt-5">
           <div className="row">
-            {serverData[0] &&
-              serverData
-                .filter((item) =>
-                  item.name?.toLowerCase().startsWith(hotelName)
-                )
-                .filter((item) =>
-                  item.country?.toLowerCase().startsWith(country)
-                )
+            {mock[0] &&
+              mock
+                .filter((item) => item.name?.toLowerCase().includes(hotelName))
+                .filter((item) => item.region?.toLowerCase().includes(country))
+                .filter((item) => {
+                  let bool = true;
+                  if (features.length === 0) {
+                    return true;
+                  }
+                  features.map((feature) => {
+                    if (!item.features?.includes(feature)) {
+                      bool = false;
+                    }
+                  });
+                  return bool;
+                })
                 .filter((item) => {
                   if (cost !== 0) {
                     return (item?.price ?? 0) < cost;
                   }
                   return true;
+                })
+                .sort((a, b) => {
+                  if (srt === "Alphabetically Descending") {
+                    if (a.name < b.name) {
+                      return 1;
+                    } else if (a.name > b.name) {
+                      return -1;
+                    } else {
+                      return 0;
+                    }
+                  } else if (srt === "Alphabetically Ascending") {
+                    if (a.name > b.name) {
+                      return 1;
+                    } else if (a.name < b.name) {
+                      return -1;
+                    } else {
+                      return 0;
+                    }
+                  } else if (srt === "Cost Ascending") {
+                    return a.price - b.price;
+                  } else if (srt === "Cost Descending") {
+                    return b.price - a.price;
+                  }
+                  if (a.name > b.name) {
+                    return 1;
+                  } else if (a.name < b.name) {
+                    return -1;
+                  } else {
+                    return 0;
+                  }
                 })
                 .map((item, i) => (
                   <HotelCard

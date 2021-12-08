@@ -1,15 +1,25 @@
 import React, { FC, useCallback, useState } from "react";
 import DatePicker from "react-datepicker";
 import { Props } from "./props";
-
+import Link from "next/link";
+import { useRouter } from "next/router";
 export const SearchBar: FC<Props> = ({ onSubmit }: Props) => {
   const [location, setLocation] = useState<string>("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [guests, setGuests] = useState<string>("");
-
+  const router = useRouter();
   const onSearchFormClick = useCallback(() => {
-    onSubmit(location, String(startDate), String(endDate), String(guests));
+    router.push({
+      pathname: "/search",
+      query: {
+        loc: location,
+        checkin: startDate.toString(),
+        checkout: endDate.toString(),
+      },
+    });
+
+    // onSubmit(location, String(startDate), String(endDate), String(guests));
   }, [onSubmit]);
 
   return (
@@ -119,14 +129,16 @@ export const SearchBar: FC<Props> = ({ onSubmit }: Props) => {
             />
           </div>
           <div>
-            <button
-              type="submit"
-              className="btn btn-lg btn-dark tw-mr-6"
-              style={{ borderRadius: 24 }}
-              onClick={onSearchFormClick}
-            >
-              <img alt="icon" src="/icons/search.png" />
-            </button>
+            <Link href={{ pathname: "/search", query: { loc: location } }}>
+              <button
+                type="submit"
+                className="btn btn-lg btn-dark tw-mr-6"
+                style={{ borderRadius: 24 }}
+                onClick={onSearchFormClick}
+              >
+                <img alt="icon" src="/icons/search.png" />
+              </button>
+            </Link>
           </div>
         </div>
       </div>
