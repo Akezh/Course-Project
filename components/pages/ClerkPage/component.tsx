@@ -41,8 +41,23 @@ export const ClerkPage: FC = () => {
     useState(false);
   const handleCloseCreateNewBookingModal = () =>
     setShowCreateNewBookingModal(false);
-  const handleShowCreateNewBookingModal = () =>
+  const [hotel, setHotel] = useState<string>("Grand Hotel Astana");
+  const [availableRooms, setAvailableRooms] = useState<Array<string>>([]);
+  const handleShowCreateNewBookingModal = () => {
+    let fetchParams = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // body: JSON.stringify(),
+    };
+    // let response = await fetch("https://", fetchParams);
+    // let responseJSON = await response.json();
+    let responseJSON: string[] = ["1.21", "1.23", "1.24", "2.28", "2.29"];
+    setAvailableRooms(responseJSON);
+
     setShowCreateNewBookingModal(true);
+  };
   const [user, setUser] = useContext(UserContext);
 
   return (
@@ -62,7 +77,7 @@ export const ClerkPage: FC = () => {
               <span className="tw-pl-4 tw-font-extrabold tw-text-xl"> + </span>
             </button>
             <div className="tw-border-gray-900 tw-border-2 tw-rounded-lg tw-w-52 tw-mr-64 tw-inline-block tw-float-right tw-text-center">
-              Current Hotel:
+              Current Hotel: {hotel}
             </div>
             <div className="tw-w-3/5 tw-m-auto tw-mt-10">
               {items.map((item, index) => (
@@ -88,6 +103,7 @@ export const ClerkPage: FC = () => {
             <Modal.Header closeButton>
               <Modal.Title>Create New Booking</Modal.Title>
             </Modal.Header>
+
             <Modal.Body>
               <form action="https://" method="POST">
                 <div>
@@ -105,11 +121,9 @@ export const ClerkPage: FC = () => {
                     <input
                       className="tw-border-2 tw-rounded-sm tw-my-2 tw-w-40"
                       placeholder="Enter Room No"
-                      type="number"
+                      type="text"
                       name="Room"
                     ></input>
-                  </div>
-                  <div className="col-6">
                     <div>People Count: </div>
                     <input
                       className="tw-border-2 tw-rounded-sm tw-my-2 tw-w-40"
@@ -117,6 +131,14 @@ export const ClerkPage: FC = () => {
                       type="number"
                       name="PeopleCount"
                     ></input>
+                  </div>
+                  <div className="col-6">
+                    <div className="tw-text-center">
+                      <h1>Available Rooms</h1>
+                      {availableRooms.map((item, ind) => (
+                        <div key={ind}> {item} </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
                 <div className="tw-ml-10 tw-my-3">
@@ -148,20 +170,7 @@ export const ClerkPage: FC = () => {
                 </Button>
               </form>
             </Modal.Body>
-            <Modal.Footer>
-              <Button
-                variant="secondary"
-                onClick={handleCloseCreateNewBookingModal}
-              >
-                Close
-              </Button>
-              <Button
-                variant="primary"
-                onClick={handleCloseCreateNewBookingModal}
-              >
-                Submit
-              </Button>
-            </Modal.Footer>
+            <Modal.Footer></Modal.Footer>
           </Modal>
         </>
       ) : (
