@@ -291,6 +291,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-tabs@^2.3.3":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@types/react-tabs/-/react-tabs-2.3.3.tgz#93536e06d616b98012e0574b9b3e280400152734"
+  integrity sha512-iKnx10tskHi9gpsvEAAJGpytbZXfcCINCFsEeYd9QN0mW7kGcUzh8Llgul1IqmFbKigXI/l3H3ej8ljWak2grw==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^17.0.2":
   version "17.0.35"
   resolved "https://registry.npmjs.org/@types/react/-/react-17.0.35.tgz"
@@ -304,6 +311,13 @@
   version "0.16.2"
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.2.tgz"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
+
+"@types/styled-jsx@^3.4.4":
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/@types/styled-jsx/-/styled-jsx-3.4.4.tgz#643b49a892f596ee8d8e588e0270d6c05947048d"
+  integrity sha512-PRRa7gU7ske4Vs7sKWrqfKnuIIS6E/Yj5oKyxuM11AwOKhH9HlbQ7cKGLluXkOXzpEoDJE+6kQMj3AE34/JooQ==
+  dependencies:
+    styled-jsx "*"
 
 "@typescript-eslint/eslint-plugin@^5.4.0":
   version "5.4.0"
@@ -647,9 +661,9 @@ bn.js@^5.0.0, bn.js@^5.1.1:
   resolved "https://registry.npmjs.org/bn.js/-/bn.js-5.2.0.tgz"
   integrity sha512-D7iWRBvnZE8ecXiLj/9wbxH7Tk79fAh8IHaTNq1RWRixsS02W+5qS+iE9yq6RYl0asXx5tw0bLhmT5pIfbSquw==
 
-bootstrap@^5.0.0-beta3:
+bootstrap@^5.1.3:
   version "5.1.3"
-  resolved "https://registry.npmjs.org/bootstrap/-/bootstrap-5.1.3.tgz"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.1.3.tgz#ba081b0c130f810fa70900acbc1c6d3c28fa8f34"
   integrity sha512-fcQztozJ8jToQWXxVuEyXWW+dSo8AiXWKwiSSrKWsRB/Qt+Ewwza+JWoLKiTuQLaEPhdNAJ7+Dosc9DOIqNy7Q==
 
 brace-expansion@^1.1.7:
@@ -896,7 +910,7 @@ cli-width@^2.0.0:
   resolved "https://registry.npmjs.org/cli-width/-/cli-width-2.2.1.tgz"
   integrity sha512-GRMWDxpOB6Dgk2E5Uo+3eEBvtOOlimMmpbFiKuLFnQzYDavtLFY3K5ona41jgN/WdRZtG7utuVSVTL4HbZHGkw==
 
-clsx@^1.1.1:
+clsx@^1.1.0, clsx@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/clsx/-/clsx-1.1.1.tgz"
   integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
@@ -3499,7 +3513,7 @@ progress@^2.0.0:
   resolved "https://registry.npmjs.org/progress/-/progress-2.0.3.tgz"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-prop-types@^15.7.2:
+prop-types@^15.5.0, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -3645,6 +3659,14 @@ react-simple-image-slider@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/react-simple-image-slider/-/react-simple-image-slider-2.3.0.tgz#b33aa060ff62ab6a77e1a72a8cdb8e205d4336cc"
   integrity sha512-oVira6wedep7v+ltBKNRtLKCY5ZgJB8bOjWpc9faUTB0Pa4ZdufKkxoEiH+Dke4rKHpzaV7TyuMI3sjTP6JRAw==
+
+react-tabs@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-3.2.3.tgz#ccbb3e1241ad3f601047305c75db661239977f2f"
+  integrity sha512-jx325RhRVnS9DdFbeF511z0T0WEqEoMl1uCE3LoZ6VaZZm7ytatxbum0B8bCTmaiV0KsU+4TtLGTGevCic7SWg==
+  dependencies:
+    clsx "^1.1.0"
+    prop-types "^15.5.0"
 
 react@^17.0.1:
   version "17.0.2"
@@ -4121,6 +4143,20 @@ style-value-types@4.1.4:
   dependencies:
     hey-listen "^1.0.8"
     tslib "^2.1.0"
+
+styled-jsx@*, styled-jsx@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/styled-jsx/-/styled-jsx-4.0.1.tgz#ae3f716eacc0792f7050389de88add6d5245b9e9"
+  integrity sha512-Gcb49/dRB1k8B4hdK8vhW27Rlb2zujCk1fISrizCcToIs+55B4vmUM0N9Gi4nnVfFZWe55jRdWpAqH1ldAKWvQ==
+  dependencies:
+    "@babel/plugin-syntax-jsx" "7.14.5"
+    "@babel/types" "7.15.0"
+    convert-source-map "1.7.0"
+    loader-utils "1.2.3"
+    source-map "0.7.3"
+    string-hash "1.1.3"
+    stylis "3.5.4"
+    stylis-rule-sheet "0.0.10"
 
 styled-jsx@5.0.0-beta.3:
   version "5.0.0-beta.3"
