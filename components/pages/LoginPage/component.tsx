@@ -29,7 +29,7 @@ export const LoginPage: FC = () => {
     let responseJSON = {
       logged: true,
       userName: "SWE_Dream_Team",
-      role: "user",
+      role: "clerk",
       id: 228,
     };
     console.log(responseJSON);

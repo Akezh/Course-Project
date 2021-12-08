@@ -22,10 +22,10 @@ export const HotelCard: FC<Props> = ({
           <div>
             <p className="card-text text-danger tw-font-semibold">{price}$</p>
             <p className="card-text text-dark tw-font-semibold tw-mt-2">
-              {description}
+              {name}
             </p>
             <p className="card-text" style={{ color: "grey" }}>
-              {name}
+              {description}
             </p>
           </div>
           <button
