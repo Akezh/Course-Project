@@ -5,27 +5,33 @@ import axios from "axios";
 import { ServerResponse } from "./props";
 import { useForm } from "react-hook-form";
 
+type RegisterPayloadType = {
+  readonly email: string;
+  readonly name: string;
+  readonly password: string;
+  readonly docId: number;
+  readonly docNumber: string;
+  readonly address: string;
+  readonly mobilePhone: string;
+  readonly homePhone: string;
+};
+
 export const RegisterPage: FC = () => {
   const { register, handleSubmit } = useForm();
   const [serverResponse, setServerResponse] =
     useState<ServerResponse>(undefined);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: RegisterPayloadType) => {
     axios({
       method: "post",
       url: "http://swe-project-dream-team.herokuapp.com/auth/register",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
       data: {
-        email: data.email,
-        name: data.name,
-        password: data.password,
-        docId: data.docId,
-        docNumber: data.docNumber,
-        address: data.address,
-        homePhone: data.homePhone,
-        mobilePhone: data.mobilePhone,
+        ...data,
+        docId: Number(data.docId),
       },
     })
       .then((response) => {
@@ -77,7 +83,7 @@ export const RegisterPage: FC = () => {
                   placeholder="email"
                   id="usr"
                   aria-required
-                  {...register("Email")}
+                  {...register("email")}
                 />
               </div>
               <div className="mt-3">
@@ -90,7 +96,7 @@ export const RegisterPage: FC = () => {
                   className="form-control"
                   placeholder="password"
                   required
-                  {...register("Password")}
+                  {...register("password")}
                 />
               </div>
               <div className="mt-3">
@@ -102,7 +108,7 @@ export const RegisterPage: FC = () => {
                   id="name"
                   className="form-control"
                   placeholder="Full name"
-                  {...register("FullName")}
+                  {...register("name")}
                   required
                 />
               </div>
@@ -119,7 +125,7 @@ export const RegisterPage: FC = () => {
                   // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                   required
                   className="form-control"
-                  {...register("Mobphone")}
+                  {...register("mobilePhone")}
                 />
               </div>
               <div className="mt-3">
@@ -133,7 +139,7 @@ export const RegisterPage: FC = () => {
                   // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                   required
                   className="form-control"
-                  {...register("Homephone")}
+                  {...register("homePhone")}
                 />
               </div>
               <div className="mt-3">
@@ -148,18 +154,19 @@ export const RegisterPage: FC = () => {
                   className="form-control"
                   placeholder="Home Address"
                   required
-                  {...register("Address")}
+                  {...register("address")}
                 />
               </div>
               <div className="mt-3">
                 <p style={{ fontSize: 18, fontWeight: "bold" }}>
-                  Identification Type
+                  Passport - 1 \ National ID - 2
                 </p>
-                <input type="radio" name="docType" value="passport"></input>
-                <label className="tw-my-1 tw-ml-3"> Passport</label>
-                <br />
-                <input type="radio" name="docType" value="NationalID"></input>
-                <label className="tw-my-1 tw-ml-3">National ID</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="ID"
+                  {...register("docNumber")}
+                ></input>
               </div>
               <div className="mt-3">
                 <label htmlFor="idnum">
@@ -168,12 +175,12 @@ export const RegisterPage: FC = () => {
                   </p>
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   id="idnum"
                   placeholder="123456789"
                   required
                   className="form-control"
-                  {...register("Idnum")}
+                  {...register("docId")}
                 />
               </div>
               <div className="mt-5 text-center">
