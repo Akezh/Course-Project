@@ -25,6 +25,7 @@
     "react-bootstrap": "^2.0.3",
     "react-datepicker": "^4.3.0",
     "react-dom": "^17.0.1",
+    "react-hook-form": "^7.21.0",
     "react-intersection-observer": "^8.32.0",
     "react-simple-image-slider": "^2.3.0",
     "react-tabs": "^3.2.3",

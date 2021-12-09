@@ -1,54 +1,68 @@
-import React, { FC, useContext, useState } from "react";
+import React, {FC, useContext} from "react";
 import Link from "next/link";
-import { Footer, Header, HotelsCarousel, UserContext } from "components";
+import {Footer, Header, HotelsCarousel, UserContext} from "components";
+import axios, {AxiosResponse} from "axios";
+import {useForm} from "react-hook-form";
+
+// type AuthUser = {
+//   readonly logged: boolean;
+//   readonly userName: string;
+//   readonly role: string;
+//   readonly id: number;
+// }
 
 export const LoginPage: FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { register, handleSubmit } = useForm();
   const [user, setUser] = useContext(UserContext);
 
-  let submit = async () => {
-    console.log(email, password);
+  const onSubmit = (data: any) => {
+    console.log("data", data);
     if (user.logged) {
       alert("You are already logged in!");
       return;
     }
-    let data = {
-      Email: email,
-      Password: password,
-    };
-    let fetchParams = {
-      method: "POST",
+
+    axios({
+      method: "post",
+      url: "http://swe-project-dream-team.herokuapp.com/auth/login",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
-    };
-    // let response = await fetch("https://", fetchParams);
-    // let responseJSON = await response.json();
-    let responseJSON = {
-      logged: true,
-      userName: "SWE_Dream_Team",
-      role: "clerk",
-      id: 228,
-    };
-    console.log(responseJSON);
-    if (responseJSON.logged == true) {
-      setUser({
-        logged: responseJSON.logged,
-        userName: responseJSON.userName,
-        role: responseJSON.role,
-        id: responseJSON.id,
+      data: {
+        email: data.email,
+        name: data.name,
+        password: data.password,
+        docId: data.docId,
+        docNumber: data.docNumber,
+        address: data.address,
+        homePhone: data.homePhone,
+        mobilePhone: data.mobilePhone,
+      },
+    })
+      .then((response: AxiosResponse<any>) => {
+        const { data } = response;
+        if (data.logged == true) {
+          setUser({
+            logged: data.logged,
+            userName: data.userName,
+            role: data.role,
+            id: data.id,
+          });
+          window.alert("Login Successful");
+        } else {
+          window.alert("Invalid credentials");
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
       });
-      window.alert("Login Successful");
-    } else {
-      window.alert("Invalid credentials");
-    }
   };
-  let signout = async () => {
+
+  const signOut = async () => {
     await setUser({ logged: false, userName: "null", role: "none" });
     alert("Successfully signed out");
   };
+
   return (
     <>
       <Header activeTab="Login" />
@@ -76,13 +90,13 @@ export const LoginPage: FC = () => {
                 </p>{" "}
                 <button
                   className="btn btn-lg btn-outline-secondary w-100"
-                  onClick={signout}
+                  onClick={signOut}
                 >
                   Sign Out
                 </button>
               </div>
             ) : (
-              <>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 {" "}
                 <p
                   className="text-center mt-1"
@@ -102,7 +116,7 @@ export const LoginPage: FC = () => {
                       className="form-control"
                       placeholder="email"
                       id="usr"
-                      onChange={(e) => setEmail(e.target.value)}
+                      {...register("Email")}
                     />
                   </div>
 
@@ -126,13 +140,13 @@ export const LoginPage: FC = () => {
                       id="psw"
                       className="form-control"
                       placeholder="password"
-                      onChange={(e) => setPassword(e.target.value)}
+                      {...register("Password")}
                     />
                   </div>
                   <div className="mt-5 text-center">
                     <button
+                      type="submit"
                       className="btn btn-lg btn-outline-success w-100"
-                      onClick={submit}
                     >
                       Sign In
                     </button>
@@ -151,7 +165,7 @@ export const LoginPage: FC = () => {
                     </a>
                   </Link>
                 </div>{" "}
-              </>
+              </form>
             )}
           </div>
         </div>

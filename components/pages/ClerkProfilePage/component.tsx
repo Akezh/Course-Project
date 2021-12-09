@@ -5,7 +5,7 @@ import { avatarService } from "static/avatarService";
 import { Button } from "react-bootstrap";
 import Link from "next/link";
 
-export const ProfilePage: FC = () => {
+export const ClerkProfilePage: FC = () => {
   interface Booking {
     BookingID: number;
     UserName: string;
@@ -69,16 +69,18 @@ export const ProfilePage: FC = () => {
 
   return (
     <>
-      <Header></Header>
+      <Header activeTab="ClerkProfile" />
       <div className="container">
         {user.logged ? (
           <div className="row">
             <div className="col-3">
               <div>
                 {user.role === "user" ? (
-                  <img src={avatarService["1"]}></img> // If the user is not admin/clerk, serve some generic image
+                  <img
+                    src={avatarService["1"]}
+                    style={{ borderRadius: "50%" }}
+                  /> // If the user is not admin/clerk, serve some generic image
                 ) : (
-                  //   <div>ass</div>
                   <img src={avatarService["1"]}></img>
                 )}
               </div>
@@ -152,7 +154,7 @@ export const ProfilePage: FC = () => {
           </h1>
         )}
       </div>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 };

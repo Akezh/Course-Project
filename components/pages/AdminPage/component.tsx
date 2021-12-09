@@ -1,20 +1,37 @@
-import React, { FC, useContext, useEffect, useMemo } from "react";
+import React, {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Footer, Header, UserContext } from "components";
-import { avatarService } from "static/avatarService";
 import { Employee } from "./libs";
+import { Modal } from "react-bootstrap";
+import { employees } from "./mock";
 
 export const AdminPage: FC = () => {
   const [user, setUser] = useContext(UserContext);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showModal2, setShowModal2] = useState<boolean>(false);
 
   useEffect(() => {
-    // const auth = {
-    //   logged: true,
-    //   userName: "john",
-    //   role: "admin",
-    //   id: 1,
-    // };
-    // setUser(auth);
-  });
+    const auth = {
+      logged: true,
+      userName: "john",
+      role: "admin",
+      id: 1,
+    };
+    setUser(auth);
+  }, []);
+
+  const onClose = useCallback(() => {
+    setShowModal(false);
+  }, []);
+  const onClose2 = useCallback(() => {
+    setShowModal2(false);
+  }, []);
 
   const schedule = useMemo(
     () => [
@@ -28,6 +45,14 @@ export const AdminPage: FC = () => {
     []
   );
 
+  const onSendPayrollClick = useCallback(() => {
+    setShowModal2(true);
+  }, []);
+
+  const onAdjustClick = useCallback(() => {
+    setShowModal(true);
+  }, []);
+
   return (
     <React.Fragment>
       <Header activeTab="Admin" />
@@ -38,35 +63,20 @@ export const AdminPage: FC = () => {
               Employee management console
             </p>
 
-            <Employee
-              fullName="John Sena, 29 y.o."
-              role="Desk Clerk"
-              avatarImg={avatarService["1"]}
-              salary="3.500$ ,"
-              salaryTransferDate="last transfer at 16 November 2021"
-              workingHours="48 hours / week"
-              schedule={schedule}
-            />
-
-            <Employee
-              fullName="John Sena, 29 y.o."
-              role="Desk Clerk"
-              avatarImg={avatarService["1"]}
-              salary="3.500$ ,"
-              salaryTransferDate="last transfer at 16 November 2021"
-              workingHours="48 hours / week"
-              schedule={schedule}
-            />
-
-            <Employee
-              fullName="John Sena, 29 y.o."
-              role="Desk Clerk"
-              avatarImg={avatarService["1"]}
-              salary="3.500$ ,"
-              salaryTransferDate="last transfer at 16 November 2021"
-              workingHours="48 hours / week"
-              schedule={schedule}
-            />
+            {employees.map((em, i) => (
+              <Employee
+                key={i}
+                fullName={em.fullName}
+                role={em.role}
+                avatarImg={em.avatarImg}
+                salary={em.salary}
+                salaryTransferDate={em.salaryTransferDate}
+                workingHours={em.workingHours}
+                schedule={schedule}
+                onSendPayroll={onSendPayrollClick}
+                onAdjustHours={onAdjustClick}
+              />
+            ))}
           </div>
         </>
       ) : (
@@ -74,6 +84,46 @@ export const AdminPage: FC = () => {
           You dont have permission to view this page
         </h1>
       )}
+      <Modal show={showModal} onHide={onClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Set payroll & hours</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <div className="row">
+            <div className="col-4 mt-2 d-flex align-items-center">
+              <p className="tw-text-xl tw-font-bold">Payroll</p>
+            </div>
+            <div className="col-8">
+              <input className="form-control mt-2" placeholder="New payroll" />
+            </div>
+            <div className="col-4 mt-4 d-flex align-items-center">
+              <p className="tw-text-xl tw-font-bold">Working hours</p>
+            </div>
+            <div className="col-8">
+              <input className="form-control mt-4" placeholder="Hours / week" />
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-danger" onClick={onClose}>
+            Cancel
+          </button>
+          <button className="btn btn-dark" onClick={onClose}>
+            Confirm
+          </button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showModal2} onHide={onClose2}>
+        <Modal.Header closeButton>
+          <Modal.Title>Payroll transfer status</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row">
+            <p className="tw-text-xl tw-font-bold">Sent Successfully</p>
+          </div>
+        </Modal.Body>
+      </Modal>
       <Footer />
     </React.Fragment>
   );
