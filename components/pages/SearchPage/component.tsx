@@ -5,6 +5,7 @@ import { Footer, Header } from "components";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 import { hotelImageService } from "static/hotelImageService";
 import axios, { AxiosResponse } from "axios";
+import { useRouter } from "next/router";
 interface hotelData {
   readonly name: string; // SALAM ALEIKYM
   readonly region?: string;
@@ -16,6 +17,8 @@ interface hotelData {
 }
 
 export const SearchPage: FC = () => {
+  const router = useRouter();
+
   const [hotelName, setHotelName] = useState<string>("");
   const [country, setCountry] = useState("");
   const [features, setFeatures] = useState<Array<string>>([]);
@@ -267,7 +270,9 @@ export const SearchPage: FC = () => {
                     price={item.price}
                     description={item.description}
                     imageUrl={hotelImageService[item.image ?? 0]}
-                    // onClick={item.onClick}
+                    onClick={() => {
+                      router.push("/hotel/" + item.image);
+                    }}
                   />
                 ))}
           </div>

@@ -67,7 +67,9 @@ export const MainPage: FC = () => {
                   description={hotel.region}
                   price={hotel.price}
                   imageUrl={hotelImageService[hotel.image]}
-                  onClick={handleClick}
+                  onClick={() => {
+                    router.push("/hotel/" + hotel.image);
+                  }}
                   key={hotel.name}
                 />
               );
