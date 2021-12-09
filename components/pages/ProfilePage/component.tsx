@@ -1,12 +1,11 @@
-
 import React, { FC, useContext, useEffect, useState } from "react";
 import { Footer, Header } from "components";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { avatarService } from "static/avatarService";
 import { ReservedHotelCard } from "./libs/ReservedHotelCard";
-
-import { upcomingHotels } from "./mock";
+import { hotelImageService } from "static/hotelImageService";
+// import { upcomingHotels } from "./mock";
 import { UserContext } from "components";
 import axios, { AxiosResponse } from "axios";
 
@@ -23,7 +22,7 @@ export const ProfilePage: FC = () => {
   }
   // let previousHotels: prevHotel[] = [];
   const [prevHotels, setPrevHotels] = useState<Array<prevHotel>>([]);
-
+  const [upcomingHotels, setUpcomingHotels] = useState<Array<prevHotel>>([]);
   useEffect(() => {
     axios({
       method: "post",
@@ -33,7 +32,6 @@ export const ProfilePage: FC = () => {
         "Access-Control-Allow-Origin": "*",
       },
       data: {
-
         id: user.id,
       },
     })
@@ -41,19 +39,28 @@ export const ProfilePage: FC = () => {
         const { data } = response;
         console.log(data);
 
-        setPrevHotels(
-          data
-          //   {
-          //   image: data.image,
-          //   name: data.name,
-          //   location: data.location,
-          //   fromDate: data.fromData,
-          //   toDate: data.toDate,
-          //   info: data.info,
-          //   price: data.price
-          // }
-        );
+        setPrevHotels(data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
 
+    axios({
+      method: "post",
+      url: "https://swe-project-dream-team.herokuapp.com/guest/getUpcoming",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        id: user.id,
+      },
+    })
+      .then((response: AxiosResponse<any>) => {
+        const { data } = response;
+        console.log(data);
+
+        setUpcomingHotels(data);
       })
       .catch((error) => {
         console.log("error", error);
@@ -90,11 +97,12 @@ export const ProfilePage: FC = () => {
                     {upcomingHotels.map((n, i) => (
                       <ReservedHotelCard
                         key={i}
-                        imageUrl={n.imageUrl}
+                        imageUrl={hotelImageService[n.image]}
                         name={n.name}
                         location={n.location}
                         info={n.info}
-                        date={n.date}
+                        date={n.fromDate}
+                        dueDate={n.toDate}
                       />
                     ))}
                   </TabPanel>
@@ -102,11 +110,12 @@ export const ProfilePage: FC = () => {
                     {prevHotels.map((n, i) => (
                       <ReservedHotelCard
                         key={i}
-                        imageUrl={n.image}
+                        imageUrl={hotelImageService[n.image]}
                         name={n.name}
                         location={n.location}
                         info={n.info}
-                        date={n.toDate}
+                        date={n.fromDate}
+                        dueDate={n.toDate}
                       />
                     ))}
                   </TabPanel>
@@ -120,37 +129,12 @@ export const ProfilePage: FC = () => {
         <>
           <Header activeTab="Home" />
 
-              <TabPanel>
-                {upcoming.map((n, i) => (
-                  <ReservedHotelCard
-                    key={i}
-                    imageUrl={hotelImageService[n.image]}
-                    name={n.name}
-                    location={n.location}
-                    info={n.info}
-                    date={n.fromDate}
-                    dueDate={n.toDate}
-                  />
-                ))}
-              </TabPanel>
-              <TabPanel>
-                {previous.map((n, i) => (
-                  <ReservedHotelCard
-                    key={i}
-                    imageUrl={hotelImageService[n.image]}
-                    name={n.name}
-                    location={n.location}
-                    info={n.info}
-                    date={n.fromDate}
-                    dueDate={n.toDate}
-                  />
-                ))}
-              </TabPanel>
-            </Tabs>
-          </div>
-        </div>
-      </div>
-      <Footer />
+          <h1 className="tw-text-center tw-text-4xl tw-my-20">
+            You dont have permission to view this page
+          </h1>
+          <Footer />
+        </>
+      )}{" "}
     </React.Fragment>
   );
 };
