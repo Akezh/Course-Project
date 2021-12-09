@@ -4,13 +4,6 @@ import { Footer, Header, HotelsCarousel, UserContext } from "components";
 import axios, { AxiosResponse } from "axios";
 import { useForm } from "react-hook-form";
 
-// type AuthUser = {
-//   readonly logged: boolean;
-//   readonly userName: string;
-//   readonly role: string;
-//   readonly id: number;
-// }
-
 export const LoginPage: FC = () => {
   const { register, handleSubmit } = useForm();
   const [user, setUser] = useContext(UserContext);
@@ -46,7 +39,7 @@ export const LoginPage: FC = () => {
         if (data.logged == true) {
           setUser({
             logged: data.logged,
-            userName: data.userName,
+            userName: data.username,
             role: data.role,
             id: data.id,
           });
