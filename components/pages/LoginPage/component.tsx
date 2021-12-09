@@ -24,9 +24,10 @@ export const LoginPage: FC = () => {
 
     axios({
       method: "post",
-      url: "http://swe-project-dream-team.herokuapp.com/auth/login",
+      url: "https://swe-project-dream-team.herokuapp.com/auth/login",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
       data: {
         email: data.email,
