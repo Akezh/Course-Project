@@ -1,8 +1,42 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import Link from "next/link";
 import { Footer, Header } from "components";
+import axios from "axios";
+import { ServerResponse } from "./props";
+import { useForm } from "react-hook-form";
 
 export const RegisterPage: FC = () => {
+  const { register, handleSubmit } = useForm();
+  const [serverResponse, setServerResponse] =
+    useState<ServerResponse>(undefined);
+
+  const onSubmit = (data: any) => {
+    axios({
+      method: "post",
+      url: "http://swe-project-dream-team.herokuapp.com/auth/register",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        email: data.email,
+        name: data.name,
+        password: data.password,
+        docId: data.docId,
+        docNumber: data.docNumber,
+        address: data.address,
+        homePhone: data.homePhone,
+        mobilePhone: data.mobilePhone,
+      },
+    })
+      .then((response) => {
+        setServerResponse(response.data);
+        console.log("response", response);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
   return (
     <>
       <Header></Header>
@@ -32,7 +66,7 @@ export const RegisterPage: FC = () => {
             >
               Sign Up
             </p>
-            <form className="mt-2 tw-px-10" action="https://" method="POST">
+            <form className="mt-2 tw-px-10" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label htmlFor="usr">
                   <p style={{ fontSize: 18, fontWeight: "bold" }}> Email </p>
@@ -42,8 +76,8 @@ export const RegisterPage: FC = () => {
                   className="form-control"
                   placeholder="email"
                   id="usr"
-                  name="Email"
                   aria-required
+                  {...register("Email")}
                 />
               </div>
               <div className="mt-3">
@@ -56,7 +90,7 @@ export const RegisterPage: FC = () => {
                   className="form-control"
                   placeholder="password"
                   required
-                  name="Password"
+                  {...register("Password")}
                 />
               </div>
               <div className="mt-3">
@@ -68,7 +102,7 @@ export const RegisterPage: FC = () => {
                   id="name"
                   className="form-control"
                   placeholder="Full name"
-                  name="FullName"
+                  {...register("FullName")}
                   required
                 />
               </div>
@@ -79,14 +113,13 @@ export const RegisterPage: FC = () => {
                   </p>
                 </label>
                 <input
-                  type="tel"
+                  type="text"
                   id="mobphone"
-                  name="Mobphone"
                   placeholder="123-45-678"
                   // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                   required
                   className="form-control"
-                  // name = "phone"
+                  {...register("Mobphone")}
                 />
               </div>
               <div className="mt-3">
@@ -94,13 +127,13 @@ export const RegisterPage: FC = () => {
                   <p style={{ fontSize: 18, fontWeight: "bold" }}>Home Phone</p>
                 </label>
                 <input
-                  type="tel"
+                  type="text"
                   id="homephone"
-                  name="Homephone"
                   placeholder="123-45-678"
                   // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                   required
                   className="form-control"
+                  {...register("Homephone")}
                 />
               </div>
               <div className="mt-3">
@@ -114,8 +147,8 @@ export const RegisterPage: FC = () => {
                   id="address"
                   className="form-control"
                   placeholder="Home Address"
-                  name="Address"
                   required
+                  {...register("Address")}
                 />
               </div>
               <div className="mt-3">
@@ -135,13 +168,12 @@ export const RegisterPage: FC = () => {
                   </p>
                 </label>
                 <input
-                  type="tel"
+                  type="text"
                   id="idnum"
-                  name="Idnum"
                   placeholder="123456789"
-                  pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                   required
                   className="form-control"
+                  {...register("Idnum")}
                 />
               </div>
               <div className="mt-5 text-center">
