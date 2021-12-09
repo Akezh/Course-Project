@@ -1,6 +1,8 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { Footer, Header, HotelCard, SearchBar } from "components";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { hotelImageService } from "static/hotelImageService";
 
 export const MainPage: FC = () => {
   const router = useRouter();
@@ -15,7 +17,18 @@ export const MainPage: FC = () => {
     console.log("endDate", endDate);
     console.log("guests", guests);
   }, []);
-
+  const [hotels, setHotels] = useState<any[]>([]);
+  useEffect(() => {
+    axios
+      .get("http://swe-project-dream-team.herokuapp.com/getHotels")
+      .then((response) => {
+        setHotels(response.data);
+        //console.log("response", response);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, []);
   return (
     <React.Fragment>
       <Header activeTab="Home" />
@@ -24,7 +37,7 @@ export const MainPage: FC = () => {
           className="tw-font-bold tw-text-3xl text-center mb-5"
           style={{ cursor: "pointer" }}
         >
-          Rexar hotels & SPA
+          Dream hotels & SPA
         </p>
 
         <div className="position-relative mt-4 tw-pb-16">
@@ -37,54 +50,28 @@ export const MainPage: FC = () => {
             Entire city of choice
           </p>
           <div className="row">
-            <HotelCard
-              className="col-4 tw-mt-10 tw-pl-40"
-              name="Mountain Resort"
-              description="Booking ID: 984554"
-              price="$800.00"
-              imageUrl="images/starter-hotel.png"
-              onClick={handleClick}
-            />
-            <HotelCard
-              className="col-4 tw-mt-10 tw-px-20"
-              name="Mountain Resort"
-              description="Booking ID: 984554"
-              price="$800.00"
-              imageUrl="images/starter-hotel.png"
-              onClick={handleClick}
-            />
-            <HotelCard
-              className="col-4 tw-mt-10 tw-pr-40"
-              name="Mountain Resort"
-              description="Booking ID: 984554"
-              price="$800.00"
-              imageUrl="images/starter-hotel.png"
-              onClick={handleClick}
-            />
-            <HotelCard
-              className="col-4 tw-mt-10 tw-pl-40"
-              name="Mountain Resort"
-              description="Booking ID: 984554"
-              price="$800.00"
-              imageUrl="images/starter-hotel.png"
-              onClick={handleClick}
-            />
-            <HotelCard
-              className="col-4 tw-mt-10 tw-px-20"
-              name="Mountain Resort"
-              description="Booking ID: 984554"
-              price="$800.00"
-              imageUrl="images/starter-hotel.png"
-              onClick={handleClick}
-            />
-            <HotelCard
-              className="col-4 tw-mt-10 tw-pr-40"
-              name="Mountain Resort"
-              description="Booking ID: 984554"
-              price="$800.00"
-              imageUrl="images/starter-hotel.png"
-              onClick={handleClick}
-            />
+            {hotels.map((hotel, i) => {
+              let classParam;
+              if (i % 3 === 0) {
+                classParam = "col-4 tw-mt-10 tw-pl-40";
+              } else if (i % 3 === 1) {
+                classParam = "col-4 tw-mt-10 tw-px-20";
+              } else if (i % 3 === 2) {
+                classParam = "col-4 tw-mt-10 tw-pr-40";
+              }
+
+              return (
+                <HotelCard
+                  className={classParam}
+                  name={hotel.name}
+                  description={hotel.region}
+                  price={hotel.price}
+                  imageUrl={hotelImageService[hotel.image]}
+                  onClick={handleClick}
+                  key={hotel.name}
+                />
+              );
+            })}
           </div>
         </div>
       </div>

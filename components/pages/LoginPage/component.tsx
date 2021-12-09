@@ -1,8 +1,8 @@
-import React, {FC, useContext} from "react";
+import React, { FC, useContext } from "react";
 import Link from "next/link";
-import {Footer, Header, HotelsCarousel, UserContext} from "components";
-import axios, {AxiosResponse} from "axios";
-import {useForm} from "react-hook-form";
+import { Footer, Header, HotelsCarousel, UserContext } from "components";
+import axios, { AxiosResponse } from "axios";
+import { useForm } from "react-hook-form";
 
 // type AuthUser = {
 //   readonly logged: boolean;
@@ -42,6 +42,7 @@ export const LoginPage: FC = () => {
     })
       .then((response: AxiosResponse<any>) => {
         const { data } = response;
+        console.log("DATA", data);
         if (data.logged == true) {
           setUser({
             logged: data.logged,
@@ -117,7 +118,7 @@ export const LoginPage: FC = () => {
                       className="form-control"
                       placeholder="email"
                       id="usr"
-                      {...register("Email")}
+                      {...register("email")}
                     />
                   </div>
 
@@ -141,7 +142,7 @@ export const LoginPage: FC = () => {
                       id="psw"
                       className="form-control"
                       placeholder="password"
-                      {...register("Password")}
+                      {...register("password")}
                     />
                   </div>
                   <div className="mt-5 text-center">

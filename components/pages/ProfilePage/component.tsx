@@ -1,12 +1,56 @@
-import React, { FC } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { Footer, Header } from "components";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { avatarService } from "static/avatarService";
 import { ReservedHotelCard } from "./libs/ReservedHotelCard";
 import { previousHotels, upcomingHotels } from "./mock";
-
+import axios from "axios";
+import { hotelImageService } from "static/hotelImageService";
 export const ProfilePage: FC = () => {
+  const [upcoming, setUpcoming] = useState<any[]>([]);
+  const [previous, setPrevious] = useState<any[]>([]);
+
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: "https://swe-project-dream-team.herokuapp.com/guest/getUpcoming",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        //HARDCODED VALUE
+        id: 2,
+      },
+    })
+      .then((response) => {
+        setUpcoming(response.data);
+        console.log("response upcoming", response);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+    axios({
+      method: "post",
+      url: "https://swe-project-dream-team.herokuapp.com/guest/getPrevious",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        //HARDCODED VALUE
+        id: 2,
+      },
+    })
+      .then((response) => {
+        setPrevious(response.data);
+        console.log("response prev", response);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, []);
   return (
     <React.Fragment>
       <Header activeTab="Home" />
@@ -31,26 +75,28 @@ export const ProfilePage: FC = () => {
               </TabList>
 
               <TabPanel>
-                {upcomingHotels.map((n, i) => (
+                {upcoming.map((n, i) => (
                   <ReservedHotelCard
                     key={i}
-                    imageUrl={n.imageUrl}
+                    imageUrl={hotelImageService[n.image]}
                     name={n.name}
                     location={n.location}
                     info={n.info}
-                    date={n.date}
+                    date={n.fromDate}
+                    dueDate={n.toDate}
                   />
                 ))}
               </TabPanel>
               <TabPanel>
-                {previousHotels.map((n, i) => (
+                {previous.map((n, i) => (
                   <ReservedHotelCard
                     key={i}
-                    imageUrl={n.imageUrl}
+                    imageUrl={hotelImageService[n.image]}
                     name={n.name}
                     location={n.location}
                     info={n.info}
-                    date={n.date}
+                    date={n.fromDate}
+                    dueDate={n.toDate}
                   />
                 ))}
               </TabPanel>

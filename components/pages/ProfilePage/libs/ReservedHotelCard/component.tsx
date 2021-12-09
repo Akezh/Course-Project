@@ -9,6 +9,7 @@ export const ReservedHotelCard: FC<Props> = ({
   date,
   location,
   name,
+  dueDate,
 }: Props) => {
   return (
     <Link href={imageUrl}>
@@ -42,6 +43,7 @@ export const ReservedHotelCard: FC<Props> = ({
           </div>
           <div className="row">
             <p className="tw-font-bold tw-text-xl">{date}</p>
+            <p className="tw-font-bold tw-text-xl">{dueDate}</p>
           </div>
         </div>
       </div>
