@@ -1,5 +1,5 @@
 import React, { FC, useMemo } from "react";
-import { Header, Footer, SearchBar } from "components";
+import { Footer, Header, SearchBar } from "components";
 import { hotelServices } from "static/hotelServices";
 import SimpleImageSlider from "react-simple-image-slider";
 
@@ -38,8 +38,9 @@ export const HotelDetailsPage: FC = () => {
       { label: "Car rental", imgUrl: hotelServices["car-rental"] },
       { label: "Food delivery", imgUrl: hotelServices["food-delivery"] },
       { label: "Wait staff", imgUrl: hotelServices["waitstaff"] },
-      { label: "Child care", imgUrl: hotelServices["childcare"] },
-      { label: "Airport transfer", imgUrl: hotelServices["airport-transfer"] },
+      { label: "Bowling", imgUrl: hotelServices["bowling"] },
+      { label: "Swimming pool", imgUrl: hotelServices["swimming-pool"] },
+      { label: "gym", imgUrl: hotelServices["gym"] },
     ],
     []
   );
