@@ -10,11 +10,13 @@ import { Footer, Header, UserContext } from "components";
 import { Employee } from "./libs";
 import { Modal } from "react-bootstrap";
 import { employees } from "./mock";
+import axios from "axios";
 
 export const AdminPage: FC = () => {
   const [user, setUser] = useContext(UserContext);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showModal2, setShowModal2] = useState<boolean>(false);
+  const [serverEmployees, setServerEmployees] = useState<any>(undefined);
 
   useEffect(() => {
     const auth = {
@@ -45,9 +47,44 @@ export const AdminPage: FC = () => {
     []
   );
 
-  const onSendPayrollClick = useCallback(() => {
-    setShowModal2(true);
+  useEffect(() => {
+    setServerEmployees(employees);
   }, []);
+
+  const onSendPayrollClick = useCallback(
+    (fullName) => () => {
+      axios({
+        method: "post",
+        url: "https://swe-project-dream-team.herokuapp.com/manager/pay",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+        .then((response) => {
+          const { data } = response;
+          const updatedEmployees = employees.map((n) => {
+            if (n.fullName === fullName) {
+              return {
+                ...n,
+                salaryTransferDate: `$, last transfer at ${
+                  data?.date ?? "9 December 2021"
+                }`,
+              };
+            }
+
+            return n;
+          });
+
+          setServerEmployees(updatedEmployees);
+          setShowModal2(true);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    },
+    []
+  );
 
   const onAdjustClick = useCallback(() => {
     setShowModal(true);
@@ -63,7 +100,7 @@ export const AdminPage: FC = () => {
               Employee management console
             </p>
 
-            {employees.map((em, i) => (
+            {serverEmployees.map((em, i) => (
               <Employee
                 key={i}
                 fullName={em.fullName}
@@ -73,7 +110,7 @@ export const AdminPage: FC = () => {
                 salaryTransferDate={em.salaryTransferDate}
                 workingHours={em.workingHours}
                 schedule={schedule}
-                onSendPayroll={onSendPayrollClick}
+                onSendPayroll={onSendPayrollClick(em.fullName)}
                 onAdjustHours={onAdjustClick}
               />
             ))}

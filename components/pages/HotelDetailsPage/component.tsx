@@ -40,7 +40,7 @@ export const HotelDetailsPage: FC = () => {
       { label: "Wait staff", imgUrl: hotelServices["waitstaff"] },
       { label: "Bowling", imgUrl: hotelServices["bowling"] },
       { label: "Swimming pool", imgUrl: hotelServices["swimming-pool"] },
-      { label: "gym", imgUrl: hotelServices["gym"] },
+      { label: "Gym", imgUrl: hotelServices["gym"] },
     ],
     []
   );
