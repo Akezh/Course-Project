@@ -35,6 +35,7 @@ export const LoginPage: FC = () => {
     })
       .then((response: AxiosResponse<any>) => {
         const { data } = response;
+        console.log("DATA", data);
         if (data.logged == true) {
           setUser({
             logged: data.logged,

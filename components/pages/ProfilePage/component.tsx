@@ -1,9 +1,11 @@
+
 import React, { FC, useContext, useEffect, useState } from "react";
 import { Footer, Header } from "components";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { avatarService } from "static/avatarService";
 import { ReservedHotelCard } from "./libs/ReservedHotelCard";
+
 import { upcomingHotels } from "./mock";
 import { UserContext } from "components";
 import axios, { AxiosResponse } from "axios";
@@ -31,6 +33,7 @@ export const ProfilePage: FC = () => {
         "Access-Control-Allow-Origin": "*",
       },
       data: {
+
         id: user.id,
       },
     })
@@ -50,6 +53,7 @@ export const ProfilePage: FC = () => {
           //   price: data.price
           // }
         );
+
       })
       .catch((error) => {
         console.log("error", error);
@@ -116,12 +120,37 @@ export const ProfilePage: FC = () => {
         <>
           <Header activeTab="Home" />
 
-          <h1 className="tw-text-center tw-text-4xl tw-my-20">
-            You dont have permission to view this page
-          </h1>
-          <Footer />
-        </>
-      )}
+              <TabPanel>
+                {upcoming.map((n, i) => (
+                  <ReservedHotelCard
+                    key={i}
+                    imageUrl={hotelImageService[n.image]}
+                    name={n.name}
+                    location={n.location}
+                    info={n.info}
+                    date={n.fromDate}
+                    dueDate={n.toDate}
+                  />
+                ))}
+              </TabPanel>
+              <TabPanel>
+                {previous.map((n, i) => (
+                  <ReservedHotelCard
+                    key={i}
+                    imageUrl={hotelImageService[n.image]}
+                    name={n.name}
+                    location={n.location}
+                    info={n.info}
+                    date={n.fromDate}
+                    dueDate={n.toDate}
+                  />
+                ))}
+              </TabPanel>
+            </Tabs>
+          </div>
+        </div>
+      </div>
+      <Footer />
     </React.Fragment>
   );
 };
