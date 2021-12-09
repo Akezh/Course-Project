@@ -1,60 +1,99 @@
-import React, { FC, useState, useContext } from "react";
+import React, { FC, useState, useContext, useEffect } from "react";
 import { Header, Footer } from "components";
 import ClerkListItem from "../../organisms/ClerkListItem/component";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Dropdown } from "react-bootstrap";
 import { UserContext } from "components";
+import axios, { AxiosResponse } from "axios";
 export const ClerkPage: FC = () => {
-  let items = [
-    {
-      BookingID: 123,
-      UserName: "Kek",
-      UserID: 123121,
-      Room: "8.123",
-      Cost: 230,
-      PeopleCount: 4,
-      BookingStartDate: "2020-08-21",
-      BookingEndDate: "2020-09-14",
-    },
-    {
-      BookingID: 124,
-      UserName: "cheburek",
-      UserID: 123122131,
-      Room: "8.323",
-      Cost: 321,
-      PeopleCount: 5,
-      BookingStartDate: "2020-08-11",
-      BookingEndDate: "2020-08-14",
-    },
-    {
-      BookingID: 125,
-      UserName: "lolKek",
-      UserID: 123121,
-      Room: "8.123",
-      Cost: 723,
-      PeopleCount: 2,
-      BookingStartDate: "2020-04-23",
-      BookingEndDate: "2020-06-12",
-    },
-  ];
+  interface booking {
+    bookingID: number;
+    guestName: string;
+    guestID: number;
+    rooms: any[];
+    cost: number;
+    peopleCount: number;
+    bookingStartDate: string;
+    bookingEndDate: string;
+  }
+  const [bookings, setBookings] = useState<Array<booking>>([]);
+  const [hotel, setHotel] = useState<string>("");
+  const [hotelID, setHotelID] = useState<string>("");
+  // const [hotelID, setHotelID] = useState<string>("");
+
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: "https://swe-project-dream-team.herokuapp.com/deskclerk/bookings/get",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        id: user.id,
+      },
+    })
+      .then((response: AxiosResponse<any>) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+
+    axios({
+      method: "post",
+      url: "https://swe-project-dream-team.herokuapp.com/deskclerk/bookings/getInfo",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data: {
+        id: user.id,
+      },
+    })
+      .then((response: AxiosResponse<any>) => {
+        const { data } = response;
+        console.log(data);
+
+        setHotel(data.hotelName);
+        setHotelID(data.hotelID);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, []);
 
   const [showCreateNewBookingModal, setShowCreateNewBookingModal] =
     useState(false);
   const handleCloseCreateNewBookingModal = () =>
     setShowCreateNewBookingModal(false);
-  const [hotel, setHotel] = useState<string>("Grand Hotel Astana");
+
   const [availableRooms, setAvailableRooms] = useState<Array<string>>([]);
   const handleShowCreateNewBookingModal = () => {
-    let fetchParams = {
-      method: "POST",
+    axios({
+      method: "post",
+      url: "https://swe-project-dream-team.herokuapp.com/deskclerk/bookings/getRooms",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
-      // body: JSON.stringify(),
-    };
-    // let response = await fetch("https://", fetchParams);
-    // let responseJSON = await response.json();
-    let responseJSON: string[] = ["1.21", "1.23", "1.24", "2.28", "2.29"];
-    setAvailableRooms(responseJSON);
+      data: {
+        id: hotelID,
+      },
+    })
+      .then((response: AxiosResponse<any>) => {
+        const { data } = response;
+        console.log(data);
+
+        // setPrevHotels(data);
+        setAvailableRooms(data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+
+    // let responseJSON: string[] = ["1.21", "1.23", "1.24", "2.28", "2.29"];
+    // setAvailableRooms(responseJSON);
 
     setShowCreateNewBookingModal(true);
   };
@@ -80,7 +119,7 @@ export const ClerkPage: FC = () => {
               Current Hotel: {hotel}
             </div>
             <div className="tw-w-3/5 tw-m-auto tw-mt-10">
-              {items.map((item, index) => (
+              {bookings.map((item, index) => (
                 <ClerkListItem
                   BookingID={item.BookingID}
                   UserName={item.UserName}
@@ -106,6 +145,16 @@ export const ClerkPage: FC = () => {
 
             <Modal.Body>
               <form action="https://" method="POST">
+                <div>
+                  <div className="tw-ml-10">Hotel ID:</div>
+                  <input
+                    className="tw-border-2 tw-ml-10 tw-rounded-sm tw-my-2 tw-w-96"
+                    placeholder=""
+                    type="number"
+                    name="HotelID"
+                    value={hotelID}
+                  ></input>
+                </div>
                 <div>
                   <div className="tw-ml-10">User ID:</div>
                   <input
@@ -133,12 +182,24 @@ export const ClerkPage: FC = () => {
                     ></input>
                   </div>
                   <div className="col-6">
-                    <div className="tw-text-center">
-                      <h1>Available Rooms</h1>
-                      {availableRooms.map((item, ind) => (
-                        <div key={ind}> {item} </div>
-                      ))}
-                    </div>
+                    <Dropdown>
+                      <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                        Available Rooms
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        {availableRooms.map((item, ind) => (
+                          <Dropdown.Item key={ind}>
+                            <input
+                              type="radio"
+                              name="room"
+                              value={item}
+                            ></input>
+                            <label>{item}</label>
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </div>
                 </div>
                 <div className="tw-ml-10 tw-my-3">
@@ -165,6 +226,7 @@ export const ClerkPage: FC = () => {
                   type="submit"
                   variant="primary"
                   className="tw-w-28 tw-ml-44"
+                  // onClick={}
                 >
                   Submit
                 </Button>
