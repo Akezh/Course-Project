@@ -1,21 +1,22 @@
-import React, { FC, useState, useContext, useEffect } from "react";
+import React, { FC, useState, useCallback, useContext, useEffect } from "react";
 import { Header, Footer } from "components";
 import ClerkListItem from "../../organisms/ClerkListItem/component";
 import { Button, Modal, Dropdown } from "react-bootstrap";
 import { UserContext } from "components";
 import axios, { AxiosResponse } from "axios";
 export const ClerkPage: FC = () => {
-  interface booking {
-    bookingID: number;
-    guestName: string;
-    guestID: number;
-    rooms: any[];
-    cost: number;
-    peopleCount: number;
-    bookingStartDate: string;
-    bookingEndDate: string;
-  }
-  const [bookings, setBookings] = useState<Array<booking>>([]);
+  // interface booking {
+  //   bookingID: number;
+  //   guestName: string;
+  //   guestID: number;
+  //   rooms: any[];
+  //   cost: number;
+  //   peopleCount: number;
+  //   bookingStartDate: string;
+  //   bookingEndDate: string;
+  // }
+
+  const [bookings, setBookings] = useState<Array<any>>([]);
   const [hotel, setHotel] = useState<string>("");
   const [hotelID, setHotelID] = useState<string>("");
   // const [hotelID, setHotelID] = useState<string>("");
@@ -34,7 +35,29 @@ export const ClerkPage: FC = () => {
     })
       .then((response: AxiosResponse<any>) => {
         const { data } = response;
-        console.log(data);
+        console.log("clerk bookings", data);
+        setBookings(data.bookings);
+        const onHandleDeleteClick = useCallback(
+          (id: number) => () => {
+            axios
+              .delete(
+                "https://swe-project-dream-team.herokuapp.com/deskclerk/bookings/cancel",
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                  },
+                  data: {
+                    id: id,
+                  },
+                }
+              )
+              .then(() => {
+                console.log("DELETED BOOKING");
+              });
+          },
+          []
+        );
       })
       .catch((error) => {
         console.log("error", error);
@@ -121,15 +144,15 @@ export const ClerkPage: FC = () => {
             <div className="tw-w-3/5 tw-m-auto tw-mt-10">
               {bookings.map((item, index) => (
                 <ClerkListItem
-                  BookingID={item.BookingID}
-                  UserName={item.UserName}
-                  UserID={item.UserID}
-                  Room={item.Room}
-                  Cost={item.Cost}
+                  BookingID={item.bookingID}
+                  UserName={item.guestName}
+                  UserID={item.guestID}
+                  Room={item.room}
+                  Cost={item.cost}
                   key={index}
-                  BookingStartDate={item.BookingStartDate}
-                  BookingEndDate={item.BookingEndDate}
-                  PeopleCount={item.PeopleCount}
+                  BookingStartDate={item.bookingStartDate}
+                  BookingEndDate={item.bookingEndDate}
+                  PeopleCount={item.peopleCount}
                 />
               ))}
             </div>
