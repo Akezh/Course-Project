@@ -1,16 +1,18 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { HotelCard } from "../../organisms/HotelCard";
 import { Footer, Header } from "components";
-import mock from "./mock";
+// import mock from "./mock";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
-
+import { hotelImageService } from "static/hotelImageService";
+import axios, { AxiosResponse } from "axios";
 interface hotelData {
-  readonly name?: string; // SALAM ALEIKYM
+  readonly name: string; // SALAM ALEIKYM
+  readonly region?: string;
   readonly description?: string;
-  readonly price?: number;
-  readonly imageUrl?: string;
-  readonly country?: string;
-  readonly onClick?: () => void;
+  image?: string;
+  readonly price: number;
+  // readonly onClick?: () => void;
+  readonly features?: string[];
 }
 
 export const SearchPage: FC = () => {
@@ -20,7 +22,19 @@ export const SearchPage: FC = () => {
   const [cost, setCost] = useState(0);
   const [srt, setSrt] = useState("Sort By");
   const services = useMemo(
-    () => ["SPA", "Swimming Pool", "Bowling", "Yacht"],
+    () => [
+      "swimming-pool",
+      "bowling",
+      "airport-transfer",
+      "car-rental",
+      "childcare",
+      "food-delivery",
+      "meal-plan",
+      "waitstaff",
+      "housekeeping",
+      "swimming-pool",
+      "gym",
+    ],
     []
   );
   const sortBy = useMemo(
@@ -54,26 +68,24 @@ export const SearchPage: FC = () => {
   );
 
   useEffect(() => {
-    let dataFromReq: hotelData[] = [
-      {
-        name: "ASD",
-        description: "ASDD",
-        price: 228,
-        imageUrl: "images/starter-hotel.png",
-        country: "Afghanistan",
-        onClick: () => {},
+    axios({
+      method: "get",
+      url: "https://swe-project-dream-team.herokuapp.com/getHotels",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
-      {
-        name: "qwe",
-        description: "qwee",
-        price: 2282,
-        country: "Kazakhstan",
-        imageUrl: "images/starter-hotel.png",
-        onClick: () => {},
-      },
-    ];
+    })
+      .then((response: AxiosResponse<any>) => {
+        const { data } = response;
+        console.log(data);
 
-    setServerData(dataFromReq);
+        setServerData(data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+    // setServerData(dataFromReq);
   }, []);
 
   return (
@@ -195,8 +207,8 @@ export const SearchPage: FC = () => {
         </div>
         <div className="mt-5">
           <div className="row">
-            {mock[0] &&
-              mock
+            {serverData[0] &&
+              serverData
                 .filter((item) => item.name?.toLowerCase().includes(hotelName))
                 .filter((item) => item.region?.toLowerCase().includes(country))
                 .filter((item) => {
@@ -254,8 +266,8 @@ export const SearchPage: FC = () => {
                     name={item.name}
                     price={item.price}
                     description={item.description}
-                    imageUrl={item.imageUrl}
-                    onClick={item.onClick}
+                    imageUrl={hotelImageService[item.image ?? 0]}
+                    // onClick={item.onClick}
                   />
                 ))}
           </div>
