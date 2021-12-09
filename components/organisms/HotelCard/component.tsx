@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Props } from "./props";
-
+import { hotelImageService } from "static/hotelImageService";
 export const HotelCard: FC<Props> = ({
   name,
   price,

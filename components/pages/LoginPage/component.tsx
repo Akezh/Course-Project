@@ -43,6 +43,7 @@ export const LoginPage: FC = () => {
             role: data.role,
             id: data.id,
           });
+          console.log(user.role);
           window.alert("Login Successful");
         } else {
           window.alert("Invalid credentials");
