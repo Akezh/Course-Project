@@ -10,7 +10,7 @@
     "heroku-postbuild": "npm run build"
   },
   "engines": {
-    "node": "12.22.0"
+    "node": "12.x"
   },
   "dependencies": {
     "@types/react-datepicker": "^4.3.2",
