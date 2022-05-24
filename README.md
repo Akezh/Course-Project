@@ -1,4 +1,5 @@
 <h3 align="center">Hotel Management System</h3>
+World-wide hotel chain system.
 
 ## Tech stack
 * TypeScript, Java
